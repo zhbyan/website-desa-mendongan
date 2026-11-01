@@ -1,0 +1,709 @@
+"use client";
+
+import { useState, type CSSProperties } from "react";
+import { Bricolage_Grotesque, Manrope } from "next/font/google";
+
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-bricolage",
+  display: "swap",
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+  display: "swap",
+});
+
+// ===== ASET GAMBAR =====
+const base = "https://lh3.googleusercontent.com/aida-public/";
+
+const IMG = {
+  logo: base + "AB6AXuCVsJiDLWSQvtdY9zUXPUybSORbJh-twN54zRxgC77kGoVzTz6egCaJ9TqPzS6PVbgbYOYsGEEKGzMWvTW89shiswCoL1yXrn_s8oI5d6oKH1CVObqzMTRbyPhoE6cUmFwGlyCUjv5Lqwu8GDY3zCLBic9XRuFuwlDSYkxQ5IKcJhTWShTKfe43d_7fHez0OSLVZKpBzS2BjOyVR9-XfRMUbgKy3EqcvAxjg5jeCcGTJuJEqpWL9fGT",
+  profile: base + "AB6AXuDCHMCkmM6oLcdtHouyRJomDIeFRIsrNkkOF2zbVxbfhEiFW-SomATmZFFGVbmDB5NXH5Gf7TQ7C2bl3m1eTsV8uYh5ZHmoZmoO_TR0DI-TlvQkvdrqljMbonN5dgf4hpzzfEnTugrO77pTEbinWJDdcRgu-E-H1esAuQfYMte0b23ZHqaqLWnW960lfYMnNzKBczQDIZ5nSyXimZIFvTcjYu36JUYnf3Yx-CNCVfP9xTCROeXoKz2g",
+  hero: base + "AB6AXuDUcTxCgCu1RY4jspWhKlyqEOxrdQ2X36U4ONhTB0AMOpwBU9dnxtYBD6dJmxjDdgT3Uky5dqSLXm-Ua77UVKwtVMxxySLJrvRe4TgFPJCIrmQMOkWfl3rXufN3bOw0cXj0CNXiYpBnF2MrB2w92syUnIaV8OmsjdeQ2H2nAu4ptSyhdYwuBtdk2IgOovzMwL4G0r0F_zJTw5uPJSmCdlobNhG__mf6tH4wV01AQRW6ybmY-7eTceFg",
+  kopi: base + "AB6AXuCeyIalBNetxKmF65IT49jq_V9eAjgL9ABa75r56DzqVMjtezo48AXwYXjuWvbUl_fNij1l9Ib6h5kE3r_MxcxpcfK25RnQ7Mlo1RUfbt0qXX7F3-f6CCL05K1Hqz93Y9umwEVHvfB-ZM0gz4L4jlNND7J7Zumf4ppfGe59UXuyyfGpncechRIc5T-qYbpSNtzxkFV5ZQD2lBDJ2G1XhRJxjDvdh2aKru7NmmoWyP2mHbWGq_GY7Tu3",
+  sayur: base + "AB6AXuAA-eVBJUGnkt5dn3Z-1zwlGA5ODatHoHXG_a65F0H0CA6Sd4_JEgk09l2g47X6sw4FM13oi_kGUHFeCJmwwTp0ozqanNc11vsPNDh1oX1u2B78N6vVDvrJ7kYxkoqZ0A3Qtc_J_2IemZIddGjuRNQyoqutqWLtvbzHlRgTEAelnXJNXIDhS-MGxnlZvRbYqzR86_f03O3Bh43qldW8YvQkgSbZITLMDtElCF2ewCdO0BAWoxKIgUt7",
+  bambu: base + "AB6AXuCVbcc8xK2SJKy4E1u3LRLUv9iPu8YHGHgRAiqHYcjaG5a8Lr-jp_xlgILUcAWR8iG78s7tOzTDv4tA5Qbfn2Gdd85aatPcDTQCPe_dhWbb8PVSQWC6w2lrp9MJraNRQNjFiWtyqbu4vqHjYeQ9FyVIjPPkXhSFoB8FG7Ka3_ifro5PceLTCUwPQv9LSjSjsUbBhnEYd7EtO_cZFYNgbdpzw5cCfqHW7xADq2UCbMxzJBMj8cUQIl2u",
+  kuliner: base + "AB6AXuAzdOLw7KBr-deOV0Vl4oeK__hWACyi5UnqqXJgsriZFm_53kAaYbgGhN4gV2YxTlY6cVfIc3pnvus4slfOZC7SOGET0FfhUw24eum4P2XI7kXAnPqsEgfiZEA8ujDwE7QV2tWtAhM8sILvxBc3DJ4N96JtelYLylg5fbt2T798nDxP0XbkbGc1FWMhYFjmmxhyq7p-hN2kxVkXwTOLD0-Rt8iIKrmY_AkUscmplNUE-5kBJZRc5eqf",
+  edukasi: base + "AB6AXuCgh4JF3QpNCqGhrbHa8Btpxob0PFD8oNcZrXPrNwPIsW5wV_OOsY4w6t4ECJJRQ-M2ahfO3CwpeTfeuKdPlagOalZw95FHmif-oIK3m9kt-sdzoLvs8Iqizl0BPZYgwy0SZjd97JrOUq8uzz0gicxS--k0DE5Xf2HfQBjdLonHxY17hBaPTCJmJ2NBdT88us1bwAdmhOm4Y1OnixSGXj4oiqPnUUBeXBicbYWfj4WhePsJFsVFd8C6",
+  peta: base + "AB6AXuDHriy61apDBJmQnqAKVxMXahlWD7Wjp8VzZPdH5bL1agQNd-BYEIzHXG9NbbOQLDlfvi-x4oou9lVOCjnsKozeS__3dWXoya8AB1vjPnwnPqt8pqC3a2fj3Efk93TgV50ioDwlG110_D1XVaWkMtUOleWDWsHYYWexNvX_ftYjqPudQOeIgw80F8XpVOCvFdFvWHfGZelouUWf0Havj_LDd7K6LH2ox2xc6i2YwNBJTAx8wznSNEEE",
+  berita1: base + "AB6AXuDnksj4JT5MG5ovXVJQRP4jMHpj39SBvFWzP-YBENaPd_UremQSYO1oVHigBCDFGYIA0_llxwnegEIqBi5XVeAAghkJYudD88cN7b9cXjcN74eeZl-aSO4KpXz9y8it5l9WusTnLC66_5-Zeko9IdLDJbSET1t84d5-xkMcGC2XLGqcuCLUxO7zV-5TgKcSvuWzp6lXFIqBUS-VPeAdj0KeVeDrm0s70dc9gbHc3wCKUHTgT7c-h7R3",
+  berita2: base + "AB6AXuA7uIyJ5Fh5GsutxYfYlzWRmY5wbsYZoJRpQMStAytKbMqIYUGc63WoUev40rd_c2mGtISmfgHGUTQcpxAdX-phz5StbflfdFX0CHN9ekjPfn80ikHrRXMnKynsU4hOR80ul39Zmev2P4bBRahnhZhmXo_kj-9yDfzU7lGg1fJ6F3ONGJpXKsL16uhuefvXtoCR88ocUkCOPVA_KEPjLcizRsW95jyRs2hNar11vgmE2PWnnPl5hyVT",
+  berita3: base + "AB6AXuChlEb03DvyT8E_caLYw6f3E568ZxtKQ6wZFVIGP3o4HWrnwpsXJdrCRSPb-mjl_Y98Ty5D6RxEm8Qc4a8pkQpgai26Ol2BjKaevl3rFlbRtszM4TObcbGksu7M4CYfZGhQxBS52AJE3H4rkv93ZXUchSWG4Tdlp6xJUJVmwVgwH8qze0lCA9AlbHyi5OzCeKQ8pt9lRhQnAuGmE3PgmfPiKdBgjewkb7GcoyxnWXgr_13T4yOs",
+  galeri1: base + "AB6AXuApp22TaNX8ba5NehF-lDMYTUnR3o_UrboEreki1l0IAin8fFbWtDEyzob2ijlCxj1E-8miBUZ4FYrkpFN8_r8ZIDLVYt7e9fDZq3E3-dFGoPfWn1Q0qWqtgimr4ltjrQ-o4EvYYfmG-kepZaBhHv-tND1P8-3-x0AXcb2T_DOIg4tzvh2-WPuPNSIJ5PlvErfHEYIE_sqUydZ6d16AQ6mCeSM-ZPbJ5cyd_-6TS8hbbpsOQ4ku3OG6",
+  galeri2: base + "AB6AXuD3O4eZTK-5L4flLYbgM-t1-Fbp5EcbIMBbac4aaX4BMa9NSbJqYtSwSmKUK81FSJI50qXSwlHAtSGrdxpmwsGaWiJ14JfxT-tUQqG5qHA3yhxtD1NoPdX7cPnUVj-5kL7ap8adJWgYw0mNZvstopTYxuTIBAVaUaOf13oGN7UZiG1QosUTPs0pdCVQjpOlpQlMAJoD9r-lK5oxq6jvtR1jdlwRi8ztOkW7myOWe145swXMAJlXeE8L",
+  galeri3: base + "AB6AXuAG4ln37OC0V8cLjPKex2DY5EhievrFel7AiSNBQSvMNc2YAedBX0VGDvhUVw0-jhbav6vVrwBOJa3m7nB3lLE2F1efMYPhaqb5OjgB38WV8SFez5hrF3KOPIPmALuKDls0TceDPiwnpi2LTtIsAR14AenE1zPjyoo8s1KPmR_fH6Jk4Cw7d0oz-1yrDYwlsL4JxFq64Ak0-2GoRlbLZAX6jWVvtNqThS4daQ8d7iFA2RPzebEw3TEX",
+};
+
+// ===== NAVBAR =====
+
+const profilLinks = [
+  { label: "Sejarah Desa", href: "#" },
+  { label: "Visi & Misi", href: "#" },
+  { label: "Struktur Organisasi", href: "#" },
+  { label: "Demografi", href: "#" },
+];
+
+const menuLinks = [
+  { label: "Potensi & UMKM", href: "#potensi-umkm" },
+  { label: "Wilayah & Peta", href: "#peta-wilayah" },
+  { label: "Berita & Kegiatan", href: "#" },
+  { label: "Kontak & Layanan", href: "#" },
+];
+
+function Navbar() {
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 bg-surface/85 backdrop-blur-md shadow-[0_1px_8px_rgba(20,66,52,0.06)]">
+      <div className="h-20 max-w-7xl mx-auto px-5 lg:px-12 flex items-center justify-between gap-4">
+        {/* Logo */}
+        <div className="flex items-center gap-3 shrink-0">
+          <img alt="Logo Desa Mendongan" className="h-8 w-auto object-contain" src={IMG.logo} />
+          <div className="flex flex-col">
+            <span className="font-bold text-base text-[--color-primary] tracking-tight leading-none" style={{ fontFamily: "var(--font-bricolage)" }}>
+              Desa Mendongan
+            </span>
+            <span className="text-[11px] font-bold text-[--color-on-surface-variant] uppercase tracking-wider mt-0.5" style={{ fontFamily: "var(--font-manrope)" }}>
+              Kec. Sumowono, Kab. Semarang
+            </span>
+          </div>
+        </div>
+
+        {/* Menu desktop */}
+        <nav className="hidden xl:flex items-center gap-1">
+          <a aria-current="page" className="transition-colors bg-[--color-primary-container] text-[--color-on-primary-container] font-bold rounded-full px-4 py-1.5 text-sm" href="/">
+            Beranda
+          </a>
+          <div className="relative group">
+            <button className="flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-semibold text-[--color-on-surface-variant] hover:text-[--color-on-surface] transition-colors" type="button">
+              <span>Profil Desa</span>
+              <span className="material-symbols-outlined text-sm transition-transform duration-200 group-hover:rotate-180">expand_more</span>
+            </button>
+            <div className="absolute top-full left-0 pt-2 hidden group-hover:block">
+              <div className="w-52 py-2 bg-[--color-surface-container-lowest] rounded-2xl shadow-xl flex flex-col overflow-hidden border border-[--color-outline-variant]">
+                {profilLinks.map((l) => (
+                  <a key={l.label} className="px-4 py-2.5 text-sm font-semibold text-[--color-on-surface-variant] hover:bg-[--color-surface-container] hover:text-[--color-on-surface] transition-colors" href={l.href}>
+                    {l.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+          {menuLinks.map((l) => (
+            <a key={l.label} className="px-3 py-1.5 rounded-full text-sm font-semibold text-[--color-on-surface-variant] hover:text-[--color-on-surface] transition-colors" href={l.href}>
+              {l.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Kanan */}
+        <div className="flex items-center gap-2 shrink-0">
+          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-[--color-surface-container-high] rounded-full shadow-sm">
+            <span className="material-symbols-outlined text-[--color-secondary] text-base">wb_cloudy</span>
+            <span className="text-[11px] font-bold text-[--color-on-surface]">Sumowono 21°C • Hawa Sejuk</span>
+          </div>
+          <div className="flex items-center bg-[--color-surface-container] rounded-full p-0.5">
+            <button className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[--color-primary] text-[--color-on-primary]" type="button">ID 🇮🇩</button>
+            <button className="px-2 py-0.5 rounded-full text-[11px] font-bold text-[--color-on-surface-variant] hover:text-[--color-on-surface]" type="button">EN 🇬🇧</button>
+          </div>
+          <a className="hidden sm:inline-flex items-center gap-2 bg-[--color-primary] text-[--color-on-primary] hover:opacity-90 px-4 py-2 rounded-full text-sm font-bold transition-all shadow-md" href="#">
+            Layanan Warga
+          </a>
+          <img alt="Profile" className="w-8 h-8 rounded-full object-cover shrink-0" src={IMG.profile} />
+        </div>
+      </div>
+    </header>
+  );
+}
+
+// ===== FOOTER =====
+const socials = [
+  { label: "Facebook", icon: "public" },
+  { label: "Instagram", icon: "photo_camera" },
+  { label: "YouTube", icon: "smart_display" },
+  { label: "Email", icon: "mail" },
+];
+const navCepat = ["Beranda", "Sejarah Desa", "Visi & Misi", "Potensi & UMKM", "Berita Desa", "Layanan Administrasi"];
+const aksesWilayah = ["Peta Digital Desa", "Statistik Demografi", "Aparatur Desa", "Pusat Pengaduan"];
+
+function Footer() {
+  return (
+    <footer className="w-full bg-[--color-surface-container-lowest] relative overflow-hidden mt-auto border-t border-[--color-outline-variant]">
+      <div className="max-w-7xl mx-auto px-5 lg:px-12 pt-14 pb-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 mb-12">
+          {/* Identitas */}
+          <div className="lg:col-span-5 flex flex-col gap-4">
+            <div className="flex items-center gap-3">
+              <img alt="Logo" className="h-9 w-auto object-contain" src={IMG.logo} />
+              <div className="flex flex-col">
+                <span className="font-bold text-base text-[--color-primary] leading-tight" style={{ fontFamily: "var(--font-bricolage)" }}>Pemerintah Desa Mendongan</span>
+                <span className="text-[11px] font-bold text-[--color-on-surface-variant] uppercase tracking-wider">Kecamatan Sumowono, Kabupaten Semarang</span>
+              </div>
+            </div>
+            <p className="text-sm text-[--color-on-surface-variant] max-w-md">
+              Portal layanan informasi publik, potensi pertanian dataran tinggi, dan ruang interaksi resmi bagi masyarakat serta wisatawan Desa Mendongan.
+            </p>
+            <div className="flex items-center gap-2 mt-2">
+              {socials.map((s) => (
+                <a key={s.label} aria-label={s.label} className="w-9 h-9 rounded-full bg-[--color-surface-container] flex items-center justify-center text-[--color-on-surface-variant] hover:bg-[--color-primary-container] hover:text-[--color-on-primary-container] transition-colors" href="#">
+                  <span className="material-symbols-outlined text-base">{s.icon}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Kantor */}
+          <div className="lg:col-span-3 flex flex-col gap-3">
+            <h4 className="font-bold text-[--color-on-surface] mb-1" style={{ fontFamily: "var(--font-bricolage)" }}>Kantor Pelayanan</h4>
+            <div className="flex items-start gap-2 text-[--color-on-surface-variant] text-sm">
+              <span className="material-symbols-outlined text-[--color-primary] text-base mt-0.5 shrink-0">location_on</span>
+              <span>Jl. Raya Mendongan No. 01, Mendongan, Kec. Sumowono, Kab. Semarang, Jawa Tengah 50662</span>
+            </div>
+            <div className="flex items-start gap-2 text-[--color-on-surface-variant] text-sm mt-1">
+              <span className="material-symbols-outlined text-[--color-primary] text-base mt-0.5 shrink-0">schedule</span>
+              <div>
+                <p className="font-bold text-[--color-on-surface] text-sm">Jam Operasional:</p>
+                <p>Senin – Jumat: 08.00 – 14.00 WIB</p>
+                <p className="text-[--color-error] text-xs font-bold mt-0.5">Sabtu, Minggu & Hari Libur Nasional: Tutup</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Nav Cepat */}
+          <div className="lg:col-span-2 flex flex-col gap-2">
+            <h4 className="font-bold text-[--color-on-surface] mb-1" style={{ fontFamily: "var(--font-bricolage)" }}>Navigasi Cepat</h4>
+            {navCepat.map((l) => (
+              <a key={l} className="text-sm text-[--color-on-surface-variant] hover:text-[--color-primary] transition-colors" href="#">{l}</a>
+            ))}
+          </div>
+
+          {/* Akses Wilayah */}
+          <div className="lg:col-span-2 flex flex-col gap-2">
+            <h4 className="font-bold text-[--color-on-surface] mb-1" style={{ fontFamily: "var(--font-bricolage)" }}>Akses Wilayah</h4>
+            {aksesWilayah.map((l) => (
+              <a key={l} className="text-sm text-[--color-on-surface-variant] hover:text-[--color-primary] transition-colors" href="#">{l}</a>
+            ))}
+          </div>
+        </div>
+
+        <div className="pt-6 border-t border-[--color-outline-variant] flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-[--color-on-surface-variant]">
+          <p>© 2026 Pemerintah Desa Mendongan. Hak Cipta Dilindungi.</p>
+          <p>Kolaborasi Riset &amp; Pengabdian · <span className="font-bold text-[--color-primary]">KKN Undip Tim I 2026</span></p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// ===== SECTION UMKM =====
+type Category = "all" | "agri" | "craft" | "food";
+const filters: { key: Category; label: string }[] = [
+  { key: "all", label: "Semua Potensi" },
+  { key: "agri", label: "Kopi & Hortikultura" },
+  { key: "craft", label: "Kerajinan Bambu" },
+  { key: "food", label: "Kuliner Khas" },
+];
+
+function UmkmSection() {
+  const [active, setActive] = useState<Category>("all");
+  const vis = (cat: Exclude<Category, "all">): CSSProperties => ({
+    display: active === "all" || active === cat ? undefined : "none",
+  });
+
+  return (
+    <section className="w-full py-14 bg-[--color-background] relative" id="potensi-umkm">
+      <div className="max-w-7xl mx-auto px-5 lg:px-12">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[--color-surface-container-high] mb-3">
+              <span className="material-symbols-outlined text-[--color-secondary] text-sm">psychiatry</span>
+              <span className="text-[11px] font-bold text-[--color-on-surface] uppercase tracking-wider">Komoditas & Produk Rakyat</span>
+            </div>
+            <h2 className="text-4xl font-bold text-[--color-primary] tracking-tight" style={{ fontFamily: "var(--font-bricolage)" }}>
+              Potensi Desa & UMKM Unggulan
+            </h2>
+            <p className="text-sm text-[--color-on-surface-variant] max-w-xl mt-2">
+              Diproduksi langsung oleh petani dan pengrajin warga lokal dengan menjunjung kearifan lereng pegunungan Ungaran-Sumowono.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            {filters.map((f) => (
+              <button key={f.key} type="button" onClick={() => setActive(f.key)}
+                className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${active === f.key ? "bg-[--color-primary] text-[--color-on-primary] shadow-sm" : "bg-[--color-surface-container] text-[--color-on-surface-variant] hover:text-[--color-on-surface]"}`}>
+                {f.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Bento grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5">
+          {/* Card 1 - Kopi */}
+          <div style={vis("agri")} className="lg:col-span-8 group rounded-2xl overflow-hidden bg-[--color-surface-container-lowest] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div className="p-6 flex flex-col justify-between h-full">
+              <div className="flex items-center justify-between gap-4 mb-5">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[--color-surface-container-high] text-[11px] font-bold text-[--color-primary] uppercase">
+                  <span className="w-2 h-2 rounded-full bg-[--color-primary]"></span> Komoditas Primadona
+                </span>
+                <span className="text-xs font-bold text-[--color-on-surface-variant]">Panen Tiap Musim</span>
+              </div>
+              <div className="mb-5">
+                <h3 className="text-2xl font-bold text-[--color-on-surface] group-hover:text-[--color-primary] transition-colors" style={{ fontFamily: "var(--font-bricolage)" }}>
+                  Kopi Robusta & Arabika Lereng Ungaran
+                </h3>
+                <p className="text-sm text-[--color-on-surface-variant] mt-2 max-w-xl">
+                  Ditanam pada ketinggian 850–1.000 mdpl di bawah naungan pohon pinus dan lamtoro. Menghasilkan aroma rempah eksotis dengan tingkat keasaman lembut, diproses secara natural maupun semi-washed oleh Kelompok Tani Desa Mendongan.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3">
+                <div className="rounded-xl overflow-hidden h-48 bg-[--color-surface-container]">
+                  <img alt="Buah kopi merah segar" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={IMG.kopi} />
+                </div>
+                <div className="rounded-xl overflow-hidden h-48 bg-[--color-surface-container]">
+                  <img alt="Kebun sayur berundak" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={IMG.sayur} />
+                </div>
+              </div>
+              <div className="mt-5 pt-4 flex items-center justify-between border-t border-[--color-outline-variant]">
+                <div className="flex items-center gap-2 text-sm font-bold text-[--color-primary]">
+                  <span className="material-symbols-outlined text-base">eco</span>
+                  <span>100% Organik & Petik Merah</span>
+                </div>
+                <a className="inline-flex items-center gap-1 text-[--color-primary] hover:opacity-75 text-sm font-bold group-hover:translate-x-1 transition-all" href="#">
+                  <span>Pesan Produk Tani</span>
+                  <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 2 - Bambu */}
+          <div style={vis("craft")} className="lg:col-span-4 group rounded-2xl overflow-hidden bg-[--color-surface-container-lowest] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+            <div className="h-48 overflow-hidden bg-[--color-surface-container] relative">
+              <img alt="Anyaman bambu" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={IMG.bambu} />
+              <span className="absolute top-3 right-3 bg-[--color-surface-container-lowest]/90 px-3 py-0.5 rounded-full text-xs font-bold text-[--color-on-surface]">Kerajinan Tangan</span>
+            </div>
+            <div className="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 className="text-xl font-bold text-[--color-on-surface] group-hover:text-[--color-primary] transition-colors" style={{ fontFamily: "var(--font-bricolage)" }}>Anyaman Bambu & Wadah Etnik</h3>
+                <p className="text-sm text-[--color-on-surface-variant] mt-2">Keahlian turun-temurun pengrajin Dusun Wonosari memadukan bilah bambu petung kokoh menjadi besek ramah lingkungan, tudung saji, dan kap lampu estetik.</p>
+              </div>
+              <div className="mt-4 pt-3 flex items-center justify-between border-t border-[--color-outline-variant]">
+                <span className="text-xs font-bold text-[--color-secondary]">Dusun Wonosari</span>
+                <a className="text-sm font-bold text-[--color-primary] hover:underline" href="#">Detail Pengrajin →</a>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 3 - Kuliner */}
+          <div style={vis("food")} className="lg:col-span-4 group rounded-2xl overflow-hidden bg-[--color-surface-container-lowest] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+            <div className="h-48 overflow-hidden bg-[--color-surface-container] relative">
+              <img alt="Kuliner khas desa" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={IMG.kuliner} />
+              <span className="absolute top-3 right-3 bg-[--color-surface-container-lowest]/90 px-3 py-0.5 rounded-full text-xs font-bold text-[--color-on-surface]">Kuliner Khas</span>
+            </div>
+            <div className="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 className="text-xl font-bold text-[--color-on-surface] group-hover:text-[--color-primary] transition-colors" style={{ fontFamily: "var(--font-bricolage)" }}>Keripik Sayur Organik & Gethuk Bakar</h3>
+                <p className="text-sm text-[--color-on-surface-variant] mt-2">Inovasi ibu-ibu PKK Dusun Mendongan Kidul mengolah hasil kebun menjadi kudapan renyah bercita rasa gurih alami.</p>
+              </div>
+              <div className="mt-4 pt-3 flex items-center justify-between border-t border-[--color-outline-variant]">
+                <span className="text-xs font-bold text-[--color-secondary]">PKK Mendongan Kidul</span>
+                <a className="text-sm font-bold text-[--color-primary] hover:underline" href="#">Lihat Varian →</a>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 4 - Wisata Edukasi */}
+          <div style={vis("agri")} className="lg:col-span-8 group rounded-2xl overflow-hidden bg-[--color-surface-container-lowest] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col sm:flex-row">
+            <div className="sm:w-1/2 h-56 sm:h-auto overflow-hidden bg-[--color-surface-container] relative shrink-0">
+              <img alt="Wisata edukasi tani" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={IMG.edukasi} />
+              <span className="absolute top-3 left-3 bg-[--color-secondary] text-[--color-on-secondary] px-3 py-0.5 rounded-full text-xs font-bold">Agrowisata</span>
+            </div>
+            <div className="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <span className="text-xs font-bold text-[--color-primary] uppercase tracking-wider">Ekowisata Berbasis Warga</span>
+                <h3 className="text-2xl font-bold text-[--color-on-surface] group-hover:text-[--color-primary] transition-colors mt-2" style={{ fontFamily: "var(--font-bricolage)" }}>Wisata Edukasi Tani & Jalur Tracking Puncak</h3>
+                <p className="text-sm text-[--color-on-surface-variant] mt-2">Rasakan pengalaman langsung memetik kopi, menanam selada hidroponik, dan menyusuri jalan setapak dusun berselimut kabut pagi.</p>
+              </div>
+              <div className="mt-5 pt-4 flex items-center justify-between border-t border-[--color-outline-variant]">
+                <div className="flex items-center gap-1 text-[--color-on-surface-variant] text-sm">
+                  <span className="material-symbols-outlined text-[--color-secondary] text-base">near_me</span>
+                  <span>Jalur Ramah Keluarga</span>
+                </div>
+                <a className="px-4 py-2 rounded-full bg-[--color-primary] text-[--color-on-primary] hover:opacity-90 text-sm font-bold transition-all" href="#">Reservasi Kunjungan</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA direktori */}
+        <div className="mt-8 p-6 rounded-2xl bg-[--color-surface-container] flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-[--color-secondary]/15 flex items-center justify-center shrink-0 text-[--color-secondary]">
+              <span className="material-symbols-outlined text-2xl">verified_user</span>
+            </div>
+            <div>
+              <h4 className="font-bold text-[--color-on-surface]" style={{ fontFamily: "var(--font-bricolage)" }}>Direktori Lengkap UMKM Desa Mendongan</h4>
+              <p className="text-sm text-[--color-on-surface-variant]">Terverifikasi oleh Pemerintah Desa & Pendampingan KKN Universitas 2026.</p>
+            </div>
+          </div>
+          <a className="px-6 py-3 rounded-full bg-[--color-primary] text-[--color-on-primary] hover:opacity-90 text-sm font-bold transition-all shrink-0 flex items-center gap-2" href="#">
+            <span>Lihat Semua 48 UMKM Desa</span>
+            <span className="material-symbols-outlined text-base">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ===== DATA KONTEN =====
+const heroStats = [
+  { icon: "groups", value: "3.420+", label: "Jiwa Penduduk", tone: "text-[--color-primary]" },
+  { icon: "holiday_village", value: "4 Dusun", label: "Wilayah Rukun", tone: "text-[--color-primary]" },
+  { icon: "storefront", value: "48+ UMKM", label: "Binaan & Mandiri", tone: "text-[--color-secondary]" },
+  { icon: "landscape", value: "920 MDPL", label: "Hawa Sejuk Lereng", tone: "text-[--color-primary]" },
+];
+
+const wilayah = [
+  { label: "Luas Wilayah Total", value: "142,50 Hektar" },
+  { label: "Batas Utara", value: "Desa Kemitir" },
+  { label: "Batas Selatan", value: "Desa Duren" },
+  { label: "Batas Timur", value: "Desa Jubelan" },
+  { label: "Batas Barat", value: "Kec. Candiroto" },
+];
+
+const dusun = [
+  { name: "1. Dusun Krajan (Pusat Pemerintahan)", info: "Balai Desa, Posyandu Pusat, 820 Jiwa" },
+  { name: "2. Dusun Mendongan Kidul", info: "Klaster Kopi & Olahan Makanan, 950 Jiwa" },
+  { name: "3. Dusun Wonosari", info: "Sentra Anyaman Bambu & Hortikultura, 840 Jiwa" },
+  { name: "4. Dusun Kalitengah", info: "Mata Air Alami & Agrowisata Tracking, 810 Jiwa" },
+];
+
+const pins = [
+  { pos: "top-1/3 left-1/4", bg: "bg-[--color-primary] text-[--color-on-primary]", icon: "account_balance", label: "Balai Desa Krajan" },
+  { pos: "top-1/2 right-1/3", bg: "bg-[--color-secondary] text-[--color-on-secondary]", icon: "shopping_basket", label: "Sentra Kerajinan Wonosari" },
+  { pos: "bottom-1/4 left-1/2", bg: "bg-[--color-tertiary] text-[--color-on-tertiary]", icon: "medical_services", label: "Puskesmas Pembantu" },
+];
+
+const berita = [
+  {
+    img: IMG.berita1, alt: "Pelatihan digital marketing", badge: "Pemberdayaan KKN", badgeClass: "bg-[--color-primary] text-[--color-on-primary]",
+    date: "22 Oktober 2026", title: "Pelatihan Digital Marketing & Branding Kemasan UMKM bersama Tim KKN 2026",
+    desc: "Program kolaboratif membekali lebih dari 30 pelaku UMKM lokal dengan keahlian fotografi produk smartphone dan integrasi QRIS.",
+  },
+  {
+    img: IMG.berita2, alt: "Bantuan bibit alpukat", badge: "Pertanian", badgeClass: "bg-[--color-secondary] text-[--color-on-secondary]",
+    date: "18 Oktober 2026", title: "Penyaluran Bantuan Bibit Alpukat & Pupuk Organik bagi Kelompok Tani",
+    desc: "Dinas Pertanian bersama Pemdes Mendongan mendistribusikan 1.200 bibit alpukat aligator unggulan.",
+  },
+  {
+    img: IMG.berita3, alt: "Layanan administrasi keliling", badge: "Layanan Warga", badgeClass: "bg-[--color-surface-container-highest] text-[--color-on-surface]",
+    date: "15 Oktober 2026", title: "Jadwal Layanan Administrasi Kependudukan Keliling di Dusun Krajan",
+    desc: "Fasilitas cetak KTP elektronik, pengurusan Akta Kelahiran, dan pemutakhiran Kartu Keluarga jemput bola.",
+  },
+];
+
+const galeri = [
+  { src: IMG.galeri1, alt: "Gotong royong desa" },
+  { src: IMG.galeri2, alt: "Pasar sayur pagi" },
+  { src: IMG.galeri3, alt: "Festival seni budaya" },
+];
+
+// ===== HALAMAN UTAMA =====
+export default function Page() {
+  return (
+    <div className={`${bricolage.variable} ${manrope.variable} bg-[--color-background] text-[--color-on-surface] antialiased min-h-screen relative flex flex-col`}>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" precedence="default" />
+      <Navbar />
+
+      <main className="w-full pt-20 flex-1">
+
+        {/* ===== HERO ===== */}
+        <section className="relative w-full overflow-hidden py-14 bg-[--color-surface-container-low]">
+          <div className="max-w-7xl mx-auto px-5 lg:px-12 relative z-10">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[--color-surface-container-lowest] shadow-sm mb-6">
+              <span className="text-[--color-secondary] text-base font-bold">🌾</span>
+              <span className="text-xs font-bold text-[--color-primary] uppercase tracking-wider">Portal Resmi & Direktori Potensi Desa Mendongan</span>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-8">
+              <div className="lg:col-span-8">
+                <h1 className="text-4xl lg:text-6xl font-bold text-[--color-on-surface] tracking-tight leading-tight mb-4" style={{ fontFamily: "var(--font-bricolage)" }}>
+                  Harmoni Alam Pegunungan, <span className="text-[--color-primary] italic">Denyut Ekonomi</span> Rakyat, dan Kemandirian Digital.
+                </h1>
+                <p className="text-base text-[--color-on-surface-variant] max-w-2xl">
+                  Menjelajahi potensi agrowisata kopi lereng, produk unggulan kerajinan bambu UMKM lokal, dan transparansi tata kelola Desa Mendongan di ketinggian sejuk lereng Sumowono, Kabupaten Semarang.
+                </p>
+              </div>
+              <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0">
+                <a className="inline-flex items-center justify-between gap-3 bg-[--color-primary] text-[--color-on-primary] hover:opacity-90 px-6 py-3.5 rounded-full text-sm font-bold transition-all shadow-md group" href="#potensi-umkm">
+                  <span>Jelajahi Potensi UMKM</span>
+                  <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </a>
+                <a className="inline-flex items-center justify-between gap-3 bg-[--color-surface-container-lowest] text-[--color-primary] hover:bg-[--color-surface-container] px-6 py-3.5 rounded-full text-sm font-bold transition-all shadow-sm group" href="#peta-wilayah">
+                  <span className="flex items-center gap-2">
+                    <span className="material-symbols-outlined text-base text-[--color-secondary]">explore</span>
+                    <span>Peta Digital 4 Dusun</span>
+                  </span>
+                  <span className="material-symbols-outlined text-base text-[--color-on-surface-variant]">south</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Panorama */}
+            <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl bg-[--color-surface-container]">
+              <div className="w-full h-80 sm:h-96 lg:h-[460px] bg-cover bg-center relative" style={{ backgroundImage: `url('${IMG.hero}')` }}>
+                <div className="absolute inset-0 bg-gradient-to-t from-[--color-inverse-surface]/90 via-[--color-inverse-surface]/30 to-transparent"></div>
+                <div className="absolute top-4 right-4 bg-[--color-surface-container-lowest]/90 backdrop-blur-md px-4 py-2 rounded-full shadow-md flex items-center gap-2">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[--color-secondary] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[--color-secondary]"></span>
+                  </span>
+                  <span className="text-xs font-bold text-[--color-on-surface] tracking-wide">SUMOWONO 21°C • MIST & SUNSHINE</span>
+                </div>
+                <div className="absolute inset-x-4 bottom-4 p-5 rounded-2xl bg-[--color-surface-container-lowest]/95 backdrop-blur-md shadow-lg">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {heroStats.map((s) => (
+                      <div key={s.label} className="flex items-center gap-3 p-2">
+                        <div className={`w-11 h-11 rounded-full bg-[--color-surface-container] flex items-center justify-center shrink-0 ${s.tone}`}>
+                          <span className="material-symbols-outlined text-2xl">{s.icon}</span>
+                        </div>
+                        <div>
+                          <div className="text-xl font-bold text-[--color-on-surface] leading-none" style={{ fontFamily: "var(--font-bricolage)" }}>{s.value}</div>
+                          <div className="text-[11px] font-bold text-[--color-on-surface-variant] uppercase tracking-wider mt-1">{s.label}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== SAMBUTAN KEPALA DESA ===== */}
+        <section className="w-full py-14 bg-[--color-surface-container-lowest]">
+          <div className="max-w-7xl mx-auto px-5 lg:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+              <div className="lg:col-span-5 relative">
+                <div className="relative mx-auto max-w-sm lg:max-w-none">
+                  <div className="absolute -top-3 -left-3 w-full h-full rounded-2xl bg-[--color-surface-container-high] -z-0"></div>
+                  <div className="relative z-10 rounded-2xl overflow-hidden shadow-xl bg-[--color-surface-container] aspect-square">
+                    <img alt="Kepala Desa Mendongan" className="w-full h-full object-cover" src={IMG.profile} />
+                  </div>
+                  <div className="absolute -bottom-4 -right-2 z-20 bg-[--color-primary] text-[--color-on-primary] px-4 py-2 rounded-full shadow-lg flex items-center gap-2">
+                    <span className="material-symbols-outlined text-[--color-primary-fixed] text-base">verified</span>
+                    <span className="text-[11px] font-bold tracking-wider uppercase">Pemimpin Masa Bakti 2021-2027</span>
+                  </div>
+                </div>
+              </div>
+              <div className="lg:col-span-7 flex flex-col gap-5">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[--color-surface-container] w-fit">
+                  <span className="material-symbols-outlined text-[--color-primary] text-sm">campaign</span>
+                  <span className="text-xs font-bold text-[--color-primary] uppercase tracking-wide">Prakata Kepala Desa</span>
+                </div>
+                <blockquote className="text-xl lg:text-2xl text-[--color-on-surface] font-medium leading-relaxed relative" style={{ fontFamily: "var(--font-bricolage)" }}>
+                  <span className="absolute -top-8 -left-3 text-7xl text-[--color-secondary]/30 select-none leading-none">"</span>
+                  Selamat datang di gerbang digital Desa Mendongan. Website ini merupakan wujud dedikasi kami bersama rekan-rekan mahasiswa KKN Universitas untuk mengangkat potensi hasil tani, kerajinan tangan lokal, dan transparansi pelayanan bagi seluruh warga serta pendatang.
+                </blockquote>
+                <p className="text-sm text-[--color-on-surface-variant] leading-relaxed">
+                  Mendongan bukan sekadar perlintasan di perbukitan Sumowono, namun tanah yang menyimpan berkah kesuburan vulkanik, kehangatan paseduluran, dan geliat industri rumahan yang pantang menyerah.
+                </p>
+                <div className="pt-3 flex items-center gap-6 border-t border-[--color-outline-variant]">
+                  <div>
+                    <h3 className="text-xl font-bold text-[--color-primary]" style={{ fontFamily: "var(--font-bricolage)" }}>Bapak Budi Santoso</h3>
+                    <p className="text-sm text-[--color-on-surface-variant]">Kepala Desa Mendongan, Kec. Sumowono</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== POTENSI & UMKM ===== */}
+        <UmkmSection />
+
+        {/* ===== PETA & 4 DUSUN ===== */}
+        <section className="w-full py-14 bg-[--color-surface-container-lowest]" id="peta-wilayah">
+          <div className="max-w-7xl mx-auto px-5 lg:px-12">
+            <div className="max-w-2xl mb-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[--color-surface-container] mb-3">
+                <span className="material-symbols-outlined text-[--color-primary] text-sm">map</span>
+                <span className="text-xs font-bold text-[--color-primary] uppercase tracking-wider">Geospasial & Wilayah</span>
+              </div>
+              <h2 className="text-3xl lg:text-4xl font-bold text-[--color-on-surface] tracking-tight" style={{ fontFamily: "var(--font-bricolage)" }}>Peta Digital & Profil 4 Dusun</h2>
+              <p className="text-sm text-[--color-on-surface-variant] mt-2">Jelajahi sebaran klaster UMKM, sarana pelayanan publik, serta batas geografis wilayah Desa Mendongan.</p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              {/* Peta */}
+              <div className="lg:col-span-8 bg-[--color-surface-container] rounded-2xl overflow-hidden shadow-md relative">
+                <div className="w-full h-[460px] bg-cover bg-center relative" style={{ backgroundImage: `url('${IMG.peta}')` }}>
+                  <div className="absolute inset-0 bg-[--color-primary]/10 pointer-events-none"></div>
+                  <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
+                    <span className="bg-[--color-surface-container-lowest]/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-[--color-primary] shadow-sm flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-[--color-primary] animate-pulse"></span> Balai Desa Mendongan
+                    </span>
+                    <span className="bg-[--color-surface-container-lowest]/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-[--color-secondary] shadow-sm flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-[--color-secondary]"></span> Sentra Kopi & UMKM
+                    </span>
+                  </div>
+                  {pins.map((p) => (
+                    <div key={p.label} className={`absolute ${p.pos} -translate-x-1/2 -translate-y-1/2 cursor-pointer group`}>
+                      <div className={`w-9 h-9 rounded-full ${p.bg} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
+                        <span className="material-symbols-outlined text-base">{p.icon}</span>
+                      </div>
+                      <div className="absolute left-1/2 -translate-x-1/2 mt-1 px-2 py-0.5 rounded bg-[--color-surface-container-lowest] text-[--color-on-surface] text-xs font-bold shadow-md whitespace-nowrap hidden group-hover:block">{p.label}</div>
+                    </div>
+                  ))}
+                  <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2 bg-[--color-surface-container-lowest]/90 backdrop-blur-md px-3 py-2 rounded-full shadow-md">
+                    <span className="text-xs font-bold text-[--color-on-surface-variant]">7.2185° S, 110.3214° E</span>
+                    <a className="px-2 py-0.5 rounded-full bg-[--color-primary] text-[--color-on-primary] text-xs font-bold hover:opacity-90" href="#">Fullscreen</a>
+                  </div>
+                </div>
+              </div>
+              {/* Data */}
+              <div className="lg:col-span-4 flex flex-col gap-4">
+                <div className="bg-[--color-surface-container] rounded-2xl p-5">
+                  <h3 className="font-bold text-[--color-primary] mb-3 flex items-center gap-2" style={{ fontFamily: "var(--font-bricolage)" }}>
+                    <span className="material-symbols-outlined">analytics</span> Data Wilayah Administrasi
+                  </h3>
+                  <div className="space-y-2 text-sm text-[--color-on-surface-variant]">
+                    {wilayah.map((w, i) => (
+                      <div key={w.label} className={`flex justify-between py-1.5 ${i < wilayah.length - 1 ? "border-b border-[--color-outline-variant]/60" : ""}`}>
+                        <span>{w.label}</span>
+                        <span className="font-bold text-[--color-on-surface]">{w.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  {dusun.map((d) => (
+                    <div key={d.name} className="p-4 rounded-xl bg-[--color-surface-container] hover:bg-[--color-surface-container-high] transition-colors cursor-pointer flex items-center justify-between">
+                      <div>
+                        <div className="text-sm font-bold text-[--color-on-surface]">{d.name}</div>
+                        <div className="text-xs text-[--color-on-surface-variant] mt-0.5">{d.info}</div>
+                      </div>
+                      <span className="material-symbols-outlined text-[--color-primary] text-sm">chevron_right</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== BERITA ===== */}
+        <section className="w-full py-14 bg-[--color-background]">
+          <div className="max-w-7xl mx-auto px-5 lg:px-12">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[--color-surface-container] mb-3">
+                  <span className="material-symbols-outlined text-[--color-primary] text-sm">newspaper</span>
+                  <span className="text-xs font-bold text-[--color-primary] uppercase tracking-wider">Kabar Desa & Pembangunan</span>
+                </div>
+                <h2 className="text-3xl lg:text-4xl font-bold text-[--color-on-surface] tracking-tight" style={{ fontFamily: "var(--font-bricolage)" }}>Berita Terkini & Informasi Warga</h2>
+              </div>
+              <a className="inline-flex items-center gap-2 text-sm font-bold text-[--color-primary] hover:opacity-75" href="#">
+                <span>Arsip Berita Selengkapnya</span>
+                <span className="material-symbols-outlined text-base">arrow_forward</span>
+              </a>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {berita.map((b) => (
+                <article key={b.title} className="bg-[--color-surface-container-lowest] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
+                  <div className="h-48 overflow-hidden bg-[--color-surface-container] relative">
+                    <img alt={b.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={b.img} />
+                    <span className={`absolute top-3 left-3 ${b.badgeClass} px-3 py-0.5 rounded-full text-xs font-bold`}>{b.badge}</span>
+                  </div>
+                  <div className="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="text-xs font-bold text-[--color-on-surface-variant] flex items-center gap-1 mb-2">
+                        <span className="material-symbols-outlined text-sm">calendar_today</span>
+                        <span>{b.date}</span>
+                      </div>
+                      <h3 className="font-bold text-[--color-on-surface] group-hover:text-[--color-primary] transition-colors leading-snug" style={{ fontFamily: "var(--font-bricolage)" }}>{b.title}</h3>
+                      <p className="text-sm text-[--color-on-surface-variant] mt-2 line-clamp-2">{b.desc}</p>
+                    </div>
+                    <div className="mt-4 pt-3 border-t border-[--color-outline-variant]">
+                      <span className="text-sm font-bold text-[--color-primary] flex items-center gap-1">
+                        Baca Artikel <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                      </span>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ===== GALERI + BANTUAN ===== */}
+        <section className="w-full py-14 bg-[--color-surface-container-lowest]">
+          <div className="max-w-7xl mx-auto px-5 lg:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-7">
+                <div className="mb-6">
+                  <span className="text-xs font-bold text-[--color-primary] uppercase tracking-wider">Dokumentasi Kegiatan</span>
+                  <h3 className="text-2xl font-bold text-[--color-on-surface] tracking-tight mt-1" style={{ fontFamily: "var(--font-bricolage)" }}>Potret Kehidupan & Gotong Royong</h3>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  {galeri.map((g) => (
+                    <div key={g.src} className="rounded-xl overflow-hidden h-36 bg-[--color-surface-container]">
+                      <img alt={g.alt} className="w-full h-full object-cover hover:scale-110 transition-transform duration-300" src={g.src} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="lg:col-span-5">
+                <div className="p-6 rounded-2xl bg-[--color-surface-container-high]">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 rounded-full bg-[--color-primary] text-[--color-on-primary] flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-base">support_agent</span>
+                    </div>
+                    <h4 className="font-bold text-[--color-on-surface]" style={{ fontFamily: "var(--font-bricolage)" }}>Pusat Bantuan & Layanan Cepat</h4>
+                  </div>
+                  <p className="text-sm text-[--color-on-surface-variant] mb-5">Butuh surat pengantar segera atau konsultasi perizinan usaha desa? Tim piket perangkat desa siap melayani Anda.</p>
+                  <div className="space-y-3">
+                    <a className="w-full flex items-center justify-between p-4 rounded-xl bg-[--color-surface-container-lowest] hover:bg-[--color-surface-container] transition-all group" href="https://wa.me/" target="_blank" rel="noopener noreferrer">
+                      <div className="flex items-center gap-3">
+                        <span className="material-symbols-outlined text-[--color-primary]">chat</span>
+                        <span className="text-sm font-bold text-[--color-on-surface]">WhatsApp Resmi Pemdes Mendongan</span>
+                      </div>
+                      <span className="material-symbols-outlined text-[--color-on-surface-variant] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                    <a className="w-full flex items-center justify-between p-4 rounded-xl bg-[--color-surface-container-lowest] hover:bg-[--color-surface-container] transition-all group" href="#">
+                      <div className="flex items-center gap-3">
+                        <span className="material-symbols-outlined text-[--color-secondary]">assignment</span>
+                        <span className="text-sm font-bold text-[--color-on-surface]">Ajukan Surat Keterangan Online</span>
+                      </div>
+                      <span className="material-symbols-outlined text-[--color-on-surface-variant] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                  </div>
+                  <div className="mt-4 flex items-center gap-2 text-[--color-on-surface-variant] text-xs">
+                    <span className="material-symbols-outlined text-sm text-[--color-primary]">info</span>
+                    <span>Waktu respons rata-rata via WhatsApp: &lt; 15 menit (jam kerja)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      {/* WhatsApp Float Button */}
+      <aside className="fixed bottom-6 right-6 z-40">
+        <a className="flex items-center gap-3 bg-[--color-primary] text-[--color-on-primary] px-5 py-3 rounded-full shadow-2xl hover:opacity-90 hover:scale-105 transition-all group" href="https://wa.me/" target="_blank" rel="noopener noreferrer">
+          <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[--color-primary-fixed] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-[--color-primary-fixed]"></span>
+          </span>
+          <span className="text-sm font-bold">Hubungi Pemdes</span>
+          <span className="material-symbols-outlined text-lg group-hover:translate-x-0.5 transition-transform">chat</span>
+        </a>
+      </aside>
+
+      <Footer />
+    </div>
+  );
+}

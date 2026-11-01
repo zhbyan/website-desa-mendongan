@@ -1,0 +1,27 @@
+import json
+
+log_file = r'C:\Users\lenovo\.gemini\antigravity-ide\brain\0c1c12e7-2b9b-4d9e-bb44-132718dbdc8b\.system_generated\logs\transcript_full.jsonl'
+
+found = []
+with open(log_file, 'r', encoding='utf-8') as f:
+    for line in f:
+        if 'SAMBUTAN KEPALA DESA' in line and 'PLANNER_RESPONSE' in line:
+            obj = json.loads(line)
+            found.append(obj)
+
+print("Found PLANNER_RESPONSE with SAMBUTAN:", len(found))
+for item in found:
+    print(f"Step {item.get('step_index')}, tool_calls: {len(item.get('tool_calls', []))}")
+    for tc in item.get('tool_calls', []):
+        print("  tool:", tc.get('name'))
+        args = tc.get('args', {})
+        if 'ReplacementContent' in args:
+            print("  ReplacementContent len:", len(args['ReplacementContent']))
+            with open(f"rep_{item.get('step_index')}.txt", 'w', encoding='utf-8') as out:
+                out.write(args['ReplacementContent'])
+            print(f"  Saved rep_{item.get('step_index')}.txt")
+        if 'CodeContent' in args:
+            print("  CodeContent len:", len(args['CodeContent']))
+            with open(f"code_{item.get('step_index')}.txt", 'w', encoding='utf-8') as out:
+                out.write(args['CodeContent'])
+            print(f"  Saved code_{item.get('step_index')}.txt")

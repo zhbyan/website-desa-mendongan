@@ -1,0 +1,16 @@
+import json
+
+log_file = r'C:\Users\lenovo\.gemini\antigravity-ide\brain\0c1c12e7-2b9b-4d9e-bb44-132718dbdc8b\.system_generated\logs\transcript_full.jsonl'
+lines_with_page = []
+with open(log_file, 'r', encoding='utf-8') as f:
+    for idx, line in enumerate(f):
+        if 'page.tsx' in line and 'SAMBUTAN KEPALA DESA' in line:
+            lines_with_page.append(line)
+
+print(f"Found {len(lines_with_page)} lines.")
+if lines_with_page:
+    # let's parse the last one
+    obj = json.loads(lines_with_page[-1])
+    print("Keys:", obj.keys())
+    with open('extracted_last.json', 'w', encoding='utf-8') as out:
+        out.write(json.dumps(obj, indent=2))
