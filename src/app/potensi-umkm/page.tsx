@@ -44,7 +44,7 @@ export default function PotensiUMKMPage() {
             name: item.name,
             category: item.category as UMKMItem["category"],
             categoryBadge: item.category,
-            image: item.photo_url || [IMG.kopi, IMG.sayur, IMG.bambu, IMG.kuliner][index % 4],
+            image: item.photo_url || [IMG.warga, IMG.sayur, IMG.bambu, IMG.kuliner][index % 4],
             price: item.price_range,
             owner: item.owner_name || "Pelaku UMKM",
             dusun: item.dusun || "Desa Mendongan",
