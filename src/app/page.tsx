@@ -3,7 +3,7 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import PageShell from "./components/PageShell";
-import { IMG } from "./components/shared";
+import { IMG, MAPS_EMBED_URL } from "./components/shared";
 import { getPublishedCmsContent } from "./public-cms";
 import { EMPTY_SITE_PROFILE, mergeSiteProfile } from "@/lib/site-profile";
 
@@ -112,11 +112,11 @@ const heroStats = [
 ];
 
 const wilayah = [
-  { label: "Luas Wilayah", value: "142,50 Ha" },
-  { label: "Batas Utara", value: "Desa Kemitir" },
-  { label: "Batas Selatan", value: "Desa Duren" },
-  { label: "Batas Timur", value: "Desa Jubelan" },
-  { label: "Batas Barat", value: "Kec. Candiroto" },
+  { label: "Luas Wilayah", value: "94 Ha" },
+  { label: "Batas Utara", value: "Desa Losari" },
+  { label: "Batas Selatan", value: "Desa Sumowowno" },
+  { label: "Batas Timur", value: "Desa Bumen" },
+  { label: "Batas Barat", value: "Kec. Trayu" },
 ];
 
 const dusun = [
@@ -314,21 +314,17 @@ export default function Page() {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             {/* Peta */}
-            <div className="lg:col-span-8 bg-[--color-surface-container] rounded-2xl overflow-hidden shadow-md relative">
-              <div className="w-full h-[460px] bg-cover bg-center relative" style={{ backgroundImage: `url('${IMG.peta}')` }}>
-                <div className="absolute inset-0 bg-[--color-primary]/10 pointer-events-none" />
-                <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
-                  <span className="bg-[--color-surface-container-lowest]/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-[--color-primary] shadow-sm flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-[--color-primary] animate-pulse" /> Balai Desa Mendongan
-                  </span>
-                  <span className="bg-[--color-surface-container-lowest]/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-[--color-secondary] shadow-sm flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-[--color-secondary]" /> Wilayah 3 Dusun
-                  </span>
-                </div>
-                <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2 bg-[--color-surface-container-lowest]/90 backdrop-blur-md px-3 py-2 rounded-full shadow-md">
-                  <span className="text-xs font-bold text-[--color-on-surface-variant]">7.2185° S, 110.3214° E</span>
-                  <Link className="px-2 py-0.5 rounded-full bg-[--color-primary] text-[--color-on-primary] text-xs font-bold hover:opacity-90" href="/wilayah-peta">Fullscreen</Link>
-                </div>
+            <div className="lg:col-span-8 rounded-2xl bg-[--color-surface-container] shadow-md relative h-[460px] overflow-hidden">
+              <iframe
+                allowFullScreen
+                className="absolute inset-0 h-full w-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                src={MAPS_EMBED_URL}
+                title="Peta Desa Mendongan"
+              />
+              <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2 bg-[--color-surface-container-lowest]/90 backdrop-blur-md px-3 py-2 rounded-full shadow-md">
+                <Link className="px-2 py-0.5 rounded-full bg-[--color-primary] text-[--color-on-primary] text-xs font-bold hover:opacity-90" href="/wilayah-peta">Fullscreen</Link>
               </div>
             </div>
             {/* Data sidebar */}

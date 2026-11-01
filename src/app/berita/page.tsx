@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import PageShell from "../components/PageShell";
-import { IMG } from "../components/shared";
+import { IMG, PAGE_HERO_IMAGES } from "../components/shared";
 import PublicGallery from "@/components/PublicGallery";
 import { getPublishedCmsContent } from "../public-cms";
 
@@ -76,7 +76,7 @@ export default function BeritaPage() {
         <div className="absolute inset-0 opacity-10">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('${IMG.hero}')` }}
+            style={{ backgroundImage: `url('${PAGE_HERO_IMAGES.berita}')` }}
           ></div>
         </div>
         <div className="w-full px-5 lg:px-12 xl:px-16 relative z-10">

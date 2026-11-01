@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import PageShell from "../../components/PageShell";
+import { PAGE_HERO_IMAGES } from "../../components/shared";
 import { getPublishedCmsContent } from "../../public-cms";
 import { EMPTY_SITE_PROFILE, mergeSiteProfile } from "@/lib/site-profile";
 
@@ -18,6 +19,9 @@ export default function VisiMisiPage() {
     <PageShell>
       {/* Hero Banner */}
       <section className="relative w-full py-16 md:py-20 bg-[#E5F8ED] overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${PAGE_HERO_IMAGES.visiMisi}')` }} />
+        </div>
         <div className="w-full px-5 lg:px-12 xl:px-16 relative z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#dcefe5] mb-4">
             <span className="material-symbols-outlined text-[#064e3b] text-sm">visibility</span>

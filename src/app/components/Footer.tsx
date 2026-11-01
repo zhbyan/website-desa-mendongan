@@ -105,7 +105,7 @@ export default function Footer() {
           <p className="text-sm text-white/40">© {year} Pemerintah Desa Mendongan. Hak Cipta Dilindungi.</p>
           <p className="text-sm text-white/40">
             Kolaborasi &amp; Pengabdian ·{" "}
-            <span className="text-[#91d4a8] font-semibold">KKN Undip Tim I 2026</span>
+            <span className="text-[#91d4a8] font-semibold">GIAT 17 UNNES</span>
           </p>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import PageShell from "../components/PageShell";
-import { IMG } from "../components/shared";
+import { IMG, PAGE_HERO_IMAGES } from "../components/shared";
 import { getPublishedCmsContent } from "../public-cms";
 
 type CategoryFilter = "Semua" | "Pertanian" | "Kuliner" | "Kerajinan" | "Peternakan" | "Jasa" | "Lainnya";
@@ -80,7 +80,7 @@ export default function PotensiUMKMPage() {
         <div className="absolute inset-0 opacity-10">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('${IMG.hero}')` }}
+            style={{ backgroundImage: `url('${PAGE_HERO_IMAGES.umkm}')` }}
           ></div>
         </div>
         <div className="w-full px-5 lg:px-12 xl:px-16 relative z-10">
@@ -282,18 +282,18 @@ export default function PotensiUMKMPage() {
             <div className="lg:col-span-6 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white text-[#064e3b] text-xs font-bold uppercase tracking-wider shadow-2xs">
                 <span className="material-symbols-outlined text-sm">eco</span>
-                <span>Karakter Geografis</span>
+                <span>Alam Desa Mendongan</span>
               </div>
               <h2
                 className="text-3xl sm:text-4xl font-bold text-[#064e3b] leading-tight"
                 style={{ fontFamily: "var(--font-bricolage)" }}
               >
-                Mengapa Hasil Alam Mendongan Memiliki Cita Rasa Istimewa?
+                Mengapa Hasil Bumi Desa Mendongan Begitu Istimewa?
               </h2>
               <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                Terletak di ketinggian 850 – 1.100 mdpl di lereng barat Gunung Ungaran, Desa Mendongan
-                diberkahi tanah andosol vulkanik yang kaya mineral, iklim mikro sejuk dengan suhu harian
-                18°C – 23°C, serta air pegunungan alami yang mengalir sepanjang musim.
+                Desa Mendongan berada di lereng barat Gunung Ungaran dengan ketinggian 920 mdpl dan hawa yang sejuk.
+                Lahan di sekitar permukiman cocok dimanfaatkan untuk pertanian sayur
+                sehinnga sebagian besar warganya bekerja sebagai petani
               </p>
 
               <div className="grid grid-cols-2 gap-4 pt-2">
@@ -308,8 +308,8 @@ export default function PotensiUMKMPage() {
                   <div className="w-10 h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center mb-2">
                     <span className="material-symbols-outlined">thermostat</span>
                   </div>
-                  <h4 className="font-bold text-sm text-gray-900">Suhu Sejuk 21°C</h4>
-                  <p className="text-xs text-gray-500 mt-1">Optimal untuk kopi arabika, sayur daun, dan peternakan sapi.</p>
+                  <h4 className="font-bold text-sm text-gray-900">Suhu Sejuk 23°C - 25°C</h4>
+                  <p className="text-xs text-gray-500 mt-1">Optimal untuk menanam buah-buahan, menanam sayuran, dan peternakan sapi.</p>
                 </div>
               </div>
             </div>
@@ -324,14 +324,11 @@ export default function PotensiUMKMPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-6">
                   <div className="text-white">
                     <span className="text-xs font-semibold uppercase tracking-wider text-emerald-300">
-                      Kawasan Agrowisata Mandiri
+                      Kawasan Pertanian dan Peternakan
                     </span>
                     <h3 className="text-xl font-bold mt-1" style={{ fontFamily: "var(--font-bricolage)" }}>
-                      Pertanian Lestari Berwawasan Lingkungan
+                      Dari Ladang dan Ternak untuk Warga Desa Mendongan
                     </h3>
-                    <p className="text-xs text-gray-200 mt-1">
-                      Didampingi program pembinaan KKN Universitas Diponegoro 2026.
-                    </p>
                   </div>
                 </div>
               </div>

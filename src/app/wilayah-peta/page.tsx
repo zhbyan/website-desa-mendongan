@@ -1,7 +1,7 @@
 "use client";
 
 import PageShell from "../components/PageShell";
-import { IMG } from "../components/shared";
+import { MAPS_EMBED_URL, PAGE_HERO_IMAGES } from "../components/shared";
 
 export default function WilayahPetaPage() {
   return (
@@ -11,7 +11,7 @@ export default function WilayahPetaPage() {
         <div className="absolute inset-0 opacity-10">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('${IMG.hero}')` }}
+            style={{ backgroundImage: `url('${PAGE_HERO_IMAGES.wilayah}')` }}
           ></div>
         </div>
         <div className="w-full px-5 lg:px-12 xl:px-16 relative z-10">
@@ -154,7 +154,7 @@ export default function WilayahPetaPage() {
               <div className="relative h-[480px] w-full bg-slate-100 sm:h-[560px] lg:h-[640px]">
                 <iframe
                   title="Peta Desa Mendongan Sumowono"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15833.39962295679!2d110.315!3d-7.228!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e70788647a52479%3A0x5027a76e35626d0!2sMendongan%2C%20Sumowono%2C%20Semarang%20Regency%2C%20Central%20Java!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid"
+                  src={MAPS_EMBED_URL}
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}

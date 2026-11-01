@@ -1,7 +1,7 @@
 "use client";
 
 import PageShell from "../../components/PageShell";
-import { IMG } from "../../components/shared";
+import { IMG, PAGE_HERO_IMAGES } from "../../components/shared";
 
 const timelineEvents = [
   {
@@ -56,7 +56,7 @@ export default function SejarahPage() {
         <div className="absolute inset-0 opacity-10">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('${IMG.hero}')` }}
+            style={{ backgroundImage: `url('${PAGE_HERO_IMAGES.sejarah}')` }}
           ></div>
         </div>
         <div className="w-full px-5 lg:px-12 xl:px-16 relative z-10">
@@ -94,11 +94,10 @@ export default function SejarahPage() {
                     {/* Lingkaran Ikon */}
                     <div className="shrink-0 relative z-10">
                       <div
-                        className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-md transition-transform group-hover:scale-110 ${
-                          idx === timelineEvents.length - 1
+                        className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-md transition-transform group-hover:scale-110 ${idx === timelineEvents.length - 1
                             ? "bg-[#064e3b] text-white ring-4 ring-emerald-100"
                             : "bg-[#E5F8ED] text-[#064e3b] border border-emerald-200"
-                        }`}
+                          }`}
                       >
                         <span className="material-symbols-outlined text-xl">{item.icon}</span>
                       </div>

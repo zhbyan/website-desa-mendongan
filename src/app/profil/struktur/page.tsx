@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import PageShell from "../../components/PageShell";
-import { IMG } from "../../components/shared";
+import { PAGE_HERO_IMAGES } from "../../components/shared";
 import { getPublishedSiteProfile } from "../../public-cms";
 import { mergeSiteProfile } from "@/lib/site-profile";
 
@@ -27,7 +27,7 @@ async function StructureContent() {
     return (
         <PageShell>
             <section className="relative w-full overflow-hidden bg-[#E5F8ED] py-16 md:py-20">
-                <div className="absolute inset-0 opacity-10"><div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${IMG.hero}')` }} /></div>
+                <div className="absolute inset-0 opacity-10"><div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${PAGE_HERO_IMAGES.struktur}')` }} /></div>
                 <div className="relative z-10 w-full px-5 lg:px-12 xl:px-16">
                     <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#dcefe5] px-3 py-1.5"><span className="material-symbols-outlined text-sm text-[#064e3b]">badge</span><span className="text-xs font-bold uppercase tracking-wider text-[#064e3b]">Profil Desa • Tata Kelola</span></div>
                     <h1 className="text-3xl font-bold tracking-tight text-[#064e3b] sm:text-4xl lg:text-5xl" style={{ fontFamily: "var(--font-bricolage)" }}>{structure.title}</h1>
