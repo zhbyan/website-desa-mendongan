@@ -92,10 +92,10 @@ function UmkmSection({ managedUmkm }: { managedUmkm: PublishedUmkm[] | null }) {
         <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 rounded-[3rem] bg-[#dcefe5]">
           <div>
             <p className="font-bold text-[#064e3b]" style={{ fontFamily: "var(--font-bricolage)" }}>Direktori Lengkap UMKM Desa Mendongan</p>
-            <p className="text-xs text-[--color-on-surface-variant] mt-0.5">Terverifikasi Pemerintah Desa &amp; Pendampingan KKN 2026</p>
+            <p className="text-xs text-[--color-on-surface-variant] mt-0.5">Data valid berdasarkan verifikasi langsung ke lokasi</p>
           </div>
           <Link href="/potensi-umkm" className="flex items-center gap-2 px-5 py-2.5 bg-[#064e3b] text-white rounded-full text-sm font-bold hover:opacity-85 transition-opacity shrink-0">
-            Lihat 48+ UMKM <span className="material-symbols-outlined text-sm">arrow_forward</span>
+            Lihat 10+ UMKM <span className="material-symbols-outlined text-sm">arrow_forward</span>
           </Link>
         </div>
       </div>
@@ -107,7 +107,7 @@ function UmkmSection({ managedUmkm }: { managedUmkm: PublishedUmkm[] | null }) {
 const heroStats = [
   { value: "3.420+", label: "Jiwa Penduduk", icon: "groups" },
   { value: "3 Dusun", label: "Wilayah Rukun", icon: "holiday_village" },
-  { value: "48+ UMKM", label: "Binaan & Mandiri", icon: "storefront" },
+  { value: "10+ UMKM", label: "Binaan & Mandiri", icon: "storefront" },
   { value: "920 mdpl", label: "Hawa Sejuk Lereng", icon: "landscape" },
 ];
 
@@ -177,14 +177,10 @@ export default function Page() {
           <div className="absolute left-5 right-5 lg:left-12 lg:right-12 xl:left-16 xl:right-16 top-1/2 -translate-y-1/2 flex items-center">
             <div className="w-full flex items-center justify-between gap-8">
               {/* Kiri: headline + CTA */}
-              <div className="max-w-2xl">
-                <h1 className="text-4xl lg:text-6xl font-bold text-white leading-[1.08] tracking-tight mb-6">
-                  Dibangun dari{" "}
-                  <span className="text-[#91d4a8]">Warisan</span>.{" "}
-                  <br />Dirancang untuk{" "}
-                  <span className="text-[#91d4a8]">Warga</span>.{" "}
-                  <br />Siap untuk{" "}
-                  <span className="text-[#91d4a8]">Masa Depan</span>.
+              <div className="max-w-4xl">
+                <h1 className="mb-6 text-xl font-bold leading-[1.08] tracking-tight text-white sm:text-4xl lg:text-5xl">
+                  <span className="block whitespace-nowrap">Desa <span className="text-[#91d4a8]">Mendongan</span></span>
+                  <span className="block whitespace-nowrap">Tumbuh dan maju Bersama <span className="text-[#91d4a8]">Warga</span></span>
                 </h1>
                 <div className="flex flex-wrap gap-3">
                   <Link
