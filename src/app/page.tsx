@@ -131,6 +131,7 @@ export default function Page() {
   const [managedGallery, setManagedGallery] = useState<Array<{ src: string; alt: string }>>([]);
   const [managedUmkm, setManagedUmkm] = useState<PublishedUmkm[]>([]);
   const [welcome, setWelcome] = useState(EMPTY_SITE_PROFILE.welcome);
+  const [welcomeLoaded, setWelcomeLoaded] = useState(false);
 
   useEffect(() => {
     getPublishedCmsContent().then((content) => {
@@ -156,7 +157,9 @@ export default function Page() {
         src: photo.image_url,
         alt: photo.title || photo.caption || "Dokumentasi Desa Mendongan",
       })) : []);
-    });
+    }).catch(() => {
+      setWelcome(EMPTY_SITE_PROFILE.welcome);
+    }).finally(() => setWelcomeLoaded(true));
   }, []);
 
   return (
@@ -201,25 +204,25 @@ export default function Page() {
               </div>
 
               {/* Kanan: Quote card kepala desa */}
-              <div className="hidden lg:flex flex-col gap-0 max-w-xs shrink-0">
+              {welcomeLoaded && welcome.quote && <div className="hidden lg:flex flex-col gap-0 max-w-xs shrink-0">
                 <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 text-white">
                   <span className="text-3xl text-[#91d4a8] font-serif leading-none">&quot;</span>
                   <p className="text-sm leading-relaxed text-white/90 mt-1">
                     {welcome.quote}
                   </p>
                   <div className="flex items-center gap-3 mt-4 pt-4 border-t border-white/15">
-                    <img
-                      src={welcome.imageUrl || IMG.profile}
-                      alt={welcome.name}
+                    {welcome.imageUrl && <img
+                      src={welcome.imageUrl}
+                      alt={welcome.name || "Kepala Desa Mendongan"}
                       className="w-10 h-10 rounded-full object-cover border-2 border-white/30"
-                    />
-                    <div>
-                      <div className="text-sm font-bold text-white">{welcome.name}</div>
-                      <div className="text-xs text-white/60">{welcome.position}</div>
-                    </div>
+                    />}
+                    {(welcome.name || welcome.position) && <div>
+                      {welcome.name && <div className="text-sm font-bold text-white">{welcome.name}</div>}
+                      {welcome.position && <div className="text-xs text-white/60">{welcome.position}</div>}
+                    </div>}
                   </div>
                 </div>
-              </div>
+              </div>}
             </div>
           </div>
 
@@ -250,12 +253,21 @@ export default function Page() {
               <div className="relative mx-auto max-w-sm lg:max-w-none mt-4 ml-4">
                 <div className="absolute -top-4 -left-4 w-full h-full rounded-2xl bg-[--color-primary]/10 -z-0" />
                 <div className="relative z-10 rounded-2xl overflow-hidden shadow-xl bg-[--color-surface-container] aspect-square">
-                  <img alt={welcome.name} className="w-full h-full object-cover" src={welcome.imageUrl || IMG.profile} />
+                  {!welcomeLoaded ? (
+                    <div aria-label="Memuat foto sambutan" aria-busy="true" className="h-full w-full animate-pulse bg-slate-200" />
+                  ) : welcome.imageUrl ? (
+                    <img alt={welcome.name || "Kepala Desa Mendongan"} className="w-full h-full object-cover" src={welcome.imageUrl} />
+                  ) : (
+                    <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-[#E5F8ED] text-[#52735f]">
+                      <span className="material-symbols-outlined text-5xl">person</span>
+                      <span className="text-xs">Foto belum tersedia</span>
+                    </div>
+                  )}
                 </div>
-                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-20 bg-[#064e3b] text-white px-5 py-2.5 rounded-full shadow-lg flex items-center gap-2 whitespace-nowrap">
+                {welcome.term && <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-20 bg-[#064e3b] text-white px-5 py-2.5 rounded-full shadow-lg flex items-center gap-2 whitespace-nowrap">
                   <span className="material-symbols-outlined text-green-300 text-base">verified</span>
                   <span className="text-[11px] font-bold tracking-wider uppercase">{welcome.term}</span>
-                </div>
+                </div>}
               </div>
             </div>
             <div className="lg:col-span-7 flex flex-col gap-5 lg:pl-6">
@@ -266,16 +278,14 @@ export default function Page() {
               <div>
                 <span className="text-5xl text-[#F4C053] font-serif font-black leading-none block mb-2">&quot;</span>
                 <blockquote className="text-xl lg:text-2xl text-[--color-on-surface] font-medium leading-relaxed" style={{ fontFamily: "var(--font-bricolage)" }}>
-                  {welcome.quote}
+                  {!welcomeLoaded ? <span className="block h-24 animate-pulse rounded-lg bg-slate-100" /> : welcome.quote}
                 </blockquote>
               </div>
-              <p className="text-sm text-[--color-on-surface-variant] leading-relaxed">
-                {welcome.supportingText}
-              </p>
+              {welcomeLoaded && welcome.supportingText && <p className="text-sm text-[--color-on-surface-variant] leading-relaxed">{welcome.supportingText}</p>}
               <div className="pt-3 flex items-center justify-between gap-6">
                 <div>
-                  <h3 className="text-2xl font-bold text-[#064e3b]" style={{ fontFamily: "var(--font-bricolage)" }}>{welcome.name}</h3>
-                  <p className="text-sm text-[--color-on-surface-variant]">{welcome.position}</p>
+                  {welcome.name && <h3 className="text-2xl font-bold text-[#064e3b]" style={{ fontFamily: "var(--font-bricolage)" }}>{welcome.name}</h3>}
+                  {welcome.position && <p className="text-sm text-[--color-on-surface-variant]">{welcome.position}</p>}
                   {welcome.whatsapp && <a className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-[#064e3b] hover:underline" href={`https://wa.me/${welcome.whatsapp.replace(/\D/g, "").replace(/^0/, "62")}`} rel="noopener noreferrer" target="_blank"><span className="material-symbols-outlined text-sm">chat</span>{welcome.whatsapp}</a>}
                 </div>
               </div>

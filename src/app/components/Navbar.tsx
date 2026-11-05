@@ -64,8 +64,8 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isTransparent
-          ? "bg-transparent border-b border-white/10"
-          : "bg-white/97 backdrop-blur-md border-b border-gray-100 shadow-[0_1px_12px_rgba(26,92,58,0.07)]"
+        ? "bg-transparent border-b border-white/10"
+        : "bg-white/97 backdrop-blur-md border-b border-gray-100 shadow-[0_1px_12px_rgba(26,92,58,0.07)]"
         }`}
     >
       <div className="w-full h-[68px] px-5 lg:px-12 xl:px-16 flex items-center justify-between gap-6">
@@ -90,18 +90,18 @@ export default function Navbar() {
         {/* Nav Links dalam border pill — desktop */}
         <div className="hidden xl:flex items-center gap-3">
           <nav className={`flex items-center gap-0.5 border rounded-full px-1.5 py-1.5 transition-all duration-300 ${isTransparent
-              ? "border-white/25 bg-white/10 backdrop-blur-sm"
-              : "border-gray-200 bg-white shadow-sm"
+            ? "border-white/25 bg-white/10 backdrop-blur-sm"
+            : "border-gray-200 bg-white shadow-sm"
             }`}>
 
             {/* Beranda */}
             <Link
               href="/"
               className={`text-[13px] font-semibold px-4 py-1.5 rounded-full transition-all duration-200 whitespace-nowrap ${isActive("/")
-                  ? "bg-[#1a5c3a] text-white shadow-sm"
-                  : isTransparent
-                    ? "text-white/85 hover:text-white hover:bg-white/15"
-                    : "text-gray-600 hover:text-[#1a5c3a] hover:bg-[#e5f3ec]"
+                ? "bg-[#1a5c3a] text-white shadow-sm"
+                : isTransparent
+                  ? "text-white/85 hover:text-white hover:bg-white/15"
+                  : "text-gray-600 hover:text-[#1a5c3a] hover:bg-[#e5f3ec]"
                 }`}
             >
               Beranda
@@ -117,10 +117,10 @@ export default function Navbar() {
               <button
                 onClick={() => setProfilDropdownOpen(!profilDropdownOpen)}
                 className={`flex items-center gap-1 text-[13px] font-semibold px-4 py-1.5 rounded-full transition-all duration-200 whitespace-nowrap ${isProfilActive
-                    ? "bg-[#1a5c3a] text-white shadow-sm"
-                    : isTransparent
-                      ? "text-white/85 hover:text-white hover:bg-white/15"
-                      : "text-gray-600 hover:text-[#1a5c3a] hover:bg-[#e5f3ec]"
+                  ? "bg-[#1a5c3a] text-white shadow-sm"
+                  : isTransparent
+                    ? "text-white/85 hover:text-white hover:bg-white/15"
+                    : "text-gray-600 hover:text-[#1a5c3a] hover:bg-[#e5f3ec]"
                   }`}
                 type="button"
                 aria-expanded={profilDropdownOpen}
@@ -142,8 +142,8 @@ export default function Navbar() {
                         key={item.href}
                         href={item.href}
                         className={`flex items-start gap-3 p-2.5 rounded-xl transition-colors ${isActive(item.href)
-                            ? "bg-[#e5f3ec] text-[#1a5c3a] font-bold"
-                            : "text-gray-700 hover:bg-gray-50 hover:text-[#1a5c3a]"
+                          ? "bg-[#e5f3ec] text-[#1a5c3a] font-bold"
+                          : "text-gray-700 hover:bg-gray-50 hover:text-[#1a5c3a]"
                           }`}
                       >
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${isActive(item.href) ? "bg-[#1a5c3a] text-white" : "bg-[#e5f3ec] text-[#1a5c3a]"
@@ -167,10 +167,10 @@ export default function Navbar() {
                 key={item.href}
                 href={item.href}
                 className={`text-[13px] font-semibold px-4 py-1.5 rounded-full transition-all duration-200 whitespace-nowrap ${isActive(item.href)
-                    ? "bg-[#1a5c3a] text-white shadow-sm"
-                    : isTransparent
-                      ? "text-white/85 hover:text-white hover:bg-white/15"
-                      : "text-gray-600 hover:text-[#1a5c3a] hover:bg-[#e5f3ec]"
+                  ? "bg-[#1a5c3a] text-white shadow-sm"
+                  : isTransparent
+                    ? "text-white/85 hover:text-white hover:bg-white/15"
+                    : "text-gray-600 hover:text-[#1a5c3a] hover:bg-[#e5f3ec]"
                   }`}
               >
                 {item.label}
@@ -183,8 +183,8 @@ export default function Navbar() {
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className={`xl:hidden flex items-center justify-center w-10 h-10 rounded-xl transition-colors ml-auto ${isTransparent
-              ? "bg-white/15 text-white hover:bg-white/25"
-              : "bg-[#e5f3ec] text-[#1a5c3a] hover:bg-[#d5eadc]"
+            ? "bg-white/15 text-white hover:bg-white/25"
+            : "bg-[#e5f3ec] text-[#1a5c3a] hover:bg-[#d5eadc]"
             }`}
           type="button"
           aria-label="Buka Menu"
