@@ -12,30 +12,37 @@ export default function DemografiPage() {
   const statCards = [
     {
       label: "Total Penduduk",
-      val: "1.378",
-      sub: "701 Laki-laki • 677 Perempuan",
+      val: "1.368±",
+      sub: "Jumlah dari data usia",
       icon: "groups",
       bgIcon: "bg-emerald-100 text-emerald-800",
     },
     {
-      label: "Kepala Keluarga",
-      val: "546",
-      sub: "Rata-rata 3.4 jiwa per KK",
-      icon: "home",
-      bgIcon: "bg-amber-100 text-amber-800",
-    },
-    {
-      label: "Usia Produktif (15-64)",
-      val: "68.2%",
-      sub: "1.256 jiwa siap kerja",
-      icon: "person_celebrate",
+      label: "Usia 0–14",
+      val: "277",
+      sub: "Orang",
+      icon: "child_care",
       bgIcon: "bg-blue-100 text-blue-800",
     },
     {
-      label: "Kepadatan Wilayah",
-      val: "537",
-      sub: "Jiwa / km² (Luas 342.5 Ha)",
-      icon: "terrain",
+      label: "Usia 15–44",
+      val: "560",
+      sub: "Orang",
+      icon: "person",
+      bgIcon: "bg-amber-100 text-amber-800",
+    },
+    {
+      label: "Usia 45–64",
+      val: "364",
+      sub: "Orang",
+      icon: "groups",
+      bgIcon: "bg-rose-100 text-rose-800",
+    },
+    {
+      label: "Usia 64+",
+      val: "167",
+      sub: "Orang",
+      icon: "elderly",
       bgIcon: "bg-purple-100 text-purple-800",
     },
   ];
@@ -70,6 +77,33 @@ export default function DemografiPage() {
     },
   ];
 
+  const ageGroups = [
+    { label: "Usia 0–14 tahun", count: 277, color: "bg-emerald-600" },
+    { label: "Usia 15–44 tahun", count: 560, color: "bg-[#064e3b]" },
+    { label: "Usia 45–64 tahun", count: 364, color: "bg-blue-600" },
+    { label: "Usia 64+ tahun", count: 167, color: "bg-amber-600" },
+  ];
+  const ageTotal = ageGroups.reduce((total, item) => total + item.count, 0);
+
+  const occupations = [
+    { label: "Petani dan buruh harian", count: 376, color: "bg-emerald-600", icon: "agriculture" },
+    { label: "Pengurus rumah tangga", count: 34, color: "bg-rose-600", icon: "home" },
+    { label: "Karyawan swasta dan wiraswasta", count: 404, color: "bg-amber-600", icon: "storefront" },
+    { label: "Perdagangan", count: 11, color: "bg-cyan-600", icon: "shopping_bag" },
+    { label: "PNS, guru, tenaga kesehatan & TNI/Polri", count: 15, color: "bg-blue-600", icon: "badge" },
+    { label: "Perangkat desa", count: 6, color: "bg-[#064e3b]", icon: "account_balance" },
+  ];
+  const occupationTotal = occupations.reduce((total, item) => total + item.count, 0);
+
+  const educationLevels = [
+    { label: "SD", count: 491 },
+    { label: "SMP", count: 225 },
+    { label: "SMA", count: 157 },
+    { label: "D1/D3", count: 7 },
+    { label: "S1/S2", count: 25 },
+  ];
+  const educationTotal = educationLevels.reduce((total, item) => total + item.count, 0);
+
   return (
     <PageShell>
       {/* Hero Banner */}
@@ -101,9 +135,9 @@ export default function DemografiPage() {
       </section>
 
       {/* 4 Stat Cards */}
-      <section className="w-full -mt-8 relative z-20">
+      <section className="relative z-20 -mt-8 w-full">
         <div className="w-full px-5 lg:px-12 xl:px-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 xl:grid-cols-5">
             {statCards.map((item) => (
               <div
                 key={item.label}
@@ -227,72 +261,28 @@ export default function DemografiPage() {
                 >
                   Mata Pencaharian Penduduk
                 </h2>
-                <p className="text-sm text-gray-600 mt-2">
-                  Mayoritas warga Mendongan bergerak di sektor pertanian dataran tinggi dan peternakan
-                  sapi perah penghasil susu segar.
-                </p>
+                <p className="text-sm text-gray-600 mt-2">Persentase dari {occupationTotal} warga pada kelompok pekerjaan yang dirinci.</p>
               </div>
 
-              <div className="bg-[#E5F8ED]/50 border border-emerald-100 rounded-3xl p-6 sm:p-8 space-y-6">
-                {[
-                  {
-                    sektor: "Petani & Pekebun Hortikultura (Kopi, Kol, Wortel, Alpukat)",
-                    persen: 58,
-                    jiwa: "728 Jiwa",
-                    icon: "agriculture",
-                    color: "bg-emerald-600",
-                  },
-                  {
-                    sektor: "Peternak Sapi Perah & Unggas Rakyat",
-                    persen: 16,
-                    jiwa: "201 Jiwa",
-                    icon: "pets",
-                    color: "bg-blue-600",
-                  },
-                  {
-                    sektor: "Pelaku UMKM, Pedagang & Pengrajin Anyaman Bambu",
-                    persen: 12,
-                    jiwa: "150 Jiwa",
-                    icon: "storefront",
-                    color: "bg-amber-600",
-                  },
-                  {
-                    sektor: "Karyawan Swasta, Buruh Jasa & Transportasi",
-                    persen: 9,
-                    jiwa: "113 Jiwa",
-                    icon: "commute",
-                    color: "bg-purple-600",
-                  },
-                  {
-                    sektor: "PNS, Guru, Tenaga Kesehatan & TNI/Polri",
-                    persen: 5,
-                    jiwa: "64 Jiwa",
-                    icon: "local_police",
-                    color: "bg-rose-600",
-                  },
-                ].map((item) => (
-                  <div key={item.sektor} className="space-y-2">
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center gap-2">
-                        <span className="material-symbols-outlined text-lg text-[#064e3b]">
-                          {item.icon}
-                        </span>
-                        <span className="font-bold text-gray-800">{item.sektor}</span>
+              <div className="space-y-6 rounded-3xl border border-emerald-100 bg-[#E5F8ED]/50 p-6 sm:p-8">
+                {occupations.map((item) => {
+                  const percentage = (item.count / occupationTotal) * 100;
+                  return <div className="space-y-2" key={item.label}>
+                    <div className="flex items-start justify-between gap-4 text-sm">
+                      <div className="flex min-w-0 items-start gap-2">
+                        <span className="material-symbols-outlined mt-0.5 text-lg text-[#064e3b]">{item.icon}</span>
+                        <span className="font-bold text-gray-800">{item.label}</span>
                       </div>
-                      <div className="text-right shrink-0">
-                        <span className="font-extrabold text-[#064e3b] mr-2">{item.persen}%</span>
-                        <span className="text-xs text-gray-500">({item.jiwa})</span>
+                      <div className="shrink-0 text-right">
+                        <span className="mr-2 font-extrabold text-[#064e3b]">{percentage.toFixed(1)}%</span>
+                        <span className="text-xs text-gray-500">({item.count} orang)</span>
                       </div>
                     </div>
-                    {/* Progress Bar */}
-                    <div className="w-full h-3 bg-white rounded-full overflow-hidden border border-emerald-200">
-                      <div
-                        className={`h-full rounded-full ${item.color} transition-all duration-500`}
-                        style={{ width: `${item.persen}%` }}
-                      ></div>
+                    <div aria-label={`${item.label}: ${percentage.toFixed(1)}%`} className="h-3 w-full overflow-hidden rounded-full border border-emerald-200 bg-white" role="img">
+                      <div className={`h-full rounded-full transition-all duration-500 ${item.color}`} style={{ width: `${percentage}%` }} />
                     </div>
-                  </div>
-                ))}
+                  </div>;
+                })}
               </div>
             </div>
           )}
@@ -313,33 +303,24 @@ export default function DemografiPage() {
                     >
                       Piramida Kelompok Usia
                     </h3>
-                    <p className="text-xs text-gray-500">Komposisi generasi produktif desa</p>
+                    <p className="text-xs text-gray-500">Persentase dari total {ageTotal.toLocaleString("id-ID")} penduduk</p>
                   </div>
                 </div>
 
                 <div className="space-y-4">
-                  {[
-                    { kelompok: "Anak-Anak (0 – 14 Tahun)", persen: 20.7, jumlah: "382 Jiwa", ket: "Generasi penerus & pelajar dasar" },
-                    { kelompok: "Usia Produktif (15 – 64 Tahun)", persen: 68.2, jumlah: "1.256 Jiwa", ket: "Kekuatan utama ekonomi & pertanian" },
-                    { kelompok: "Lansia (65+ Tahun)", persen: 11.1, jumlah: "204 Jiwa", ket: "Warga sepuh dalam binaan Posyandu Lansia" },
-                  ].map((u) => (
-                    <div key={u.kelompok} className="p-4 bg-white rounded-2xl border border-gray-100">
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-sm font-bold text-gray-800">{u.kelompok}</span>
-                        <span className="text-sm font-extrabold text-[#064e3b]">{u.persen}%</span>
+                  {ageGroups.map((item) => {
+                    const percentage = (item.count / ageTotal) * 100;
+                    return <div className="rounded-2xl border border-gray-100 bg-white p-4" key={item.label}>
+                      <div className="mb-2 flex items-center justify-between gap-3">
+                        <span className="text-sm font-bold text-gray-800">{item.label}</span>
+                        <span className="shrink-0 text-sm font-extrabold text-[#064e3b]">{percentage.toFixed(1)}%</span>
                       </div>
-                      <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden mb-2">
-                        <div
-                          className="h-full bg-[#064e3b] rounded-full"
-                          style={{ width: `${u.persen}%` }}
-                        ></div>
+                      <div aria-label={`${item.label}: ${percentage.toFixed(1)}%`} className="mb-2 h-2.5 w-full overflow-hidden rounded-full bg-slate-100" role="img">
+                        <div className={`h-full rounded-full ${item.color}`} style={{ width: `${percentage}%` }} />
                       </div>
-                      <div className="flex justify-between text-xs text-gray-500">
-                        <span>{u.jumlah}</span>
-                        <span>{u.ket}</span>
-                      </div>
-                    </div>
-                  ))}
+                      <span className="text-xs text-gray-500">{item.count.toLocaleString("id-ID")} jiwa</span>
+                    </div>;
+                  })}
                 </div>
               </div>
 
@@ -356,34 +337,25 @@ export default function DemografiPage() {
                     >
                       Tingkat Pendidikan Terakhir
                     </h3>
-                    <p className="text-xs text-gray-500">Warga usia 15 tahun ke atas</p>
+                    <p className="text-xs text-gray-500">Persentase dari {educationTotal.toLocaleString("id-ID")} data pendidikan</p>
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  {[
-                    { tingkat: "SD / Sederajat", persen: 32, label: "468 Orang" },
-                    { tingkat: "SMP / MTs Sederajat", persen: 28, label: "410 Orang" },
-                    { tingkat: "SMA / SMK / MA", persen: 31, label: "453 Orang" },
-                    { tingkat: "Diploma & Sarjana (D3 / S1 / S2)", persen: 9, label: "132 Orang" },
-                  ].map((p) => (
-                    <div key={p.tingkat} className="p-3.5 bg-white rounded-2xl border border-gray-100 flex items-center justify-between">
-                      <span className="text-sm font-semibold text-gray-700">{p.tingkat}</span>
-                      <div className="text-right">
-                        <span className="text-sm font-bold text-[#064e3b] mr-2">{p.persen}%</span>
-                        <span className="text-xs text-gray-400">({p.label})</span>
+                  {educationLevels.map((item) => {
+                    const percentage = (item.count / educationTotal) * 100;
+                    return <div className="rounded-xl border border-gray-100 bg-white p-3.5" key={item.label}>
+                      <div className="mb-2 flex items-center justify-between gap-3">
+                        <span className="text-sm font-semibold text-gray-700">{item.label}</span>
+                        <span className="shrink-0 text-xs font-bold text-[#064e3b]">{percentage.toFixed(1)}% <span className="ml-1 font-normal text-gray-500">({item.count} orang)</span></span>
                       </div>
-                    </div>
-                  ))}
+                      <div aria-label={`${item.label}: ${percentage.toFixed(1)}%`} className="h-2 w-full overflow-hidden rounded-full bg-slate-100" role="img">
+                        <div className="h-full rounded-full bg-blue-600" style={{ width: `${percentage}%` }} />
+                      </div>
+                    </div>;
+                  })}
                 </div>
 
-                <div className="mt-6 p-4 rounded-2xl bg-[#E5F8ED] border border-emerald-100 flex items-center gap-3">
-                  <span className="material-symbols-outlined text-[#064e3b]">verified</span>
-                  <p className="text-xs text-gray-700">
-                    Pemerintah desa bersama Tim KKN secara aktif menyelenggarakan bimbingan belajar,
-                    literasi perpustakaan desa, dan pelatihan vokasi komputer untuk generasi muda.
-                  </p>
-                </div>
               </div>
             </div>
           )}

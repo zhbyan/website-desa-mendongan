@@ -72,10 +72,12 @@ export type SiteProfile = {
     };
 };
 
+export const VILLAGE_WELCOME_QUOTE = "Selamat datang di website resmi Desa Mendongan. Temukan berbagai potensi hasil tani, kerajinan tangan lokal, dan informasi pelayanan desa yang transparan untuk warga maupun pengunjung.";
+
 export const EMPTY_SITE_PROFILE: SiteProfile = {
     welcome: {
         imageUrl: "",
-        quote: "",
+        quote: VILLAGE_WELCOME_QUOTE,
         supportingText: "",
         name: "",
         position: "",
@@ -123,8 +125,13 @@ export function mergeSiteProfile(value: unknown): SiteProfile {
         "3$1",
     );
 
+    const welcome = { ...EMPTY_SITE_PROFILE.welcome, ...saved.welcome };
+    if (!saved.welcome?.quote || saved.welcome.quote.startsWith("Selamat datang di gerbang digital Desa Mendongan.")) {
+        welcome.quote = VILLAGE_WELCOME_QUOTE;
+    }
+
     return {
-        welcome: { ...EMPTY_SITE_PROFILE.welcome, ...saved.welcome },
+        welcome,
         vision: {
             ...EMPTY_SITE_PROFILE.vision,
             ...saved.vision,

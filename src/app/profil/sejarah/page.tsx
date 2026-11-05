@@ -1,180 +1,100 @@
-"use client";
-
+import { BookOpenText, Footprints, Landmark, MapPinned, Trees } from "lucide-react";
 import PageShell from "../../components/PageShell";
-import { IMG, PAGE_HERO_IMAGES } from "../../components/shared";
+import { PAGE_HERO_IMAGES } from "../../components/shared";
 
-const timelineEvents = [
-  {
-    year: "1920-an",
-    title: "Awal Mula Permukiman & Asal Nama Desa",
-    desc: "Para perantau dari daerah Demak dan Kendal mulai membuka lahan di lereng barat Gunung Ungaran. Mereka tertarik oleh kesuburan tanah andosol vulkanik dan kelimpahan sumber mata air alami. Nama 'Mendongan' diambil dari tumbuhan 'mendong' (Fimbristylis globulosa) yang tumbuh subur di sepanjang aliran sungai kecil yang membelah pemukiman pertama.",
-    icon: "foundation",
-    highlight: "Pembukaan Lahan Pertama",
-  },
-  {
-    year: "1945",
-    title: "Masa Perjuangan Kemerdekaan",
-    desc: "Warga Mendongan berperan penting dalam perjuangan kemerdekaan sebagai pos logistik dan dapur umum bagi laskar pejuang di jalur gerilya Sumowono-Kendal. Jiwa gotong royong dan kebersamaan warga berakar kuat sejak masa perjuangan ini.",
-    icon: "flag",
-    highlight: "Pos Logistik Pejuang",
-  },
-  {
-    year: "1970-an",
-    title: "Sentra Kopi Robusta & Hortikultura",
-    desc: "Program revitalisasi perkebunan mendorong penanaman massal kopi robusta dan tanaman sayur dataran tinggi. Mendongan mulai dikenal luas sebagai pemasok kopi berkualitas di pasar tradisional Ambarawa dan Semarang.",
-    icon: "local_cafe",
-    highlight: "Pendirian Kelompok Tani",
-  },
-  {
-    year: "1998",
-    title: "Era Otonomi & Pembangunan Partisipatif",
-    desc: "Era reformasi memperkuat tata kelola pemerintahan desa. Badan Permusyawaratan Desa (BPD) dan Lembaga Ketahanan Masyarakat Desa (LKMD) dibentuk, mendorong musyawarah perencanaan pembangunan berbasis kebutuhan tiap dusun.",
-    icon: "gavel",
-    highlight: "Demokrasi Desa Mandiri",
-  },
-  {
-    year: "2015 – 2020",
-    title: "Modernisasi Infrastruktur & Kebangkitan UMKM",
-    desc: "Akses jalan antar-dusun diaspal dan dibeton, sarana air bersih Pamsimas diperluas, dan kelompok perajin anyaman bambu serta pengolahan keripik jamur mulai mendapatkan pelatihan kemasan modern.",
-    icon: "trending_up",
-    highlight: "Akses Jalan & Air Bersih",
-  },
-  {
-    year: "2026",
-    title: "Transformasi Digital Bersama KKN Undip",
-    desc: "Kolaborasi bersejarah antara Pemerintah Desa Mendongan dan Tim KKN Universitas Diponegoro melahirkan sistem pelayanan surat digital, katalog online UMKM desa, pemetaan potensi agrowisata, dan peluncuran portal resmi desa cerdas.",
-    icon: "rocket_launch",
-    highlight: "Peluncuran Website Desa Resmi",
-  },
-];
+const villageOrigins = ["Gondangsari", "Suatu", "Kauman", "Pancas", "Setro"];
 
 export default function SejarahPage() {
-  return (
-    <PageShell>
-      {/* Hero Banner */}
-      <section className="relative w-full py-16 md:py-20 bg-[#E5F8ED] overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('${PAGE_HERO_IMAGES.sejarah}')` }}
-          ></div>
-        </div>
-        <div className="w-full px-5 lg:px-12 xl:px-16 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#dcefe5] mb-4">
-            <span className="material-symbols-outlined text-[#064e3b] text-sm">auto_stories</span>
-            <span className="text-xs font-bold text-[#064e3b] uppercase tracking-wider">
-              Profil Desa • Jejak Historis
-            </span>
-          </div>
-          <h1
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#064e3b] tracking-tight"
-            style={{ fontFamily: "var(--font-bricolage)" }}
-          >
-            Sejarah & Asal-Usul Desa Mendongan
-          </h1>
-          <p className="text-base text-gray-700 mt-3 max-w-2xl leading-relaxed">
-            Menelusuri jejak sejarah panjang berdirinya Desa Mendongan sejak era pembukaan lahan
-            pra-kemerdekaan hingga berkembang menjadi desa agrowisata mandiri di lereng Sumowono.
-          </p>
-        </div>
-      </section>
-
-      {/* Timeline Section */}
-      <section className="w-full py-16 bg-white">
-        <div className="w-full px-5 lg:px-12 xl:px-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            {/* Timeline Kolom Kiri */}
-            <div className="lg:col-span-8">
-              <div className="space-y-10 relative">
-                {/* Garis vertikal timeline */}
-                <div className="absolute left-6 top-4 bottom-4 w-1 bg-gradient-to-b from-[#064e3b] via-emerald-200 to-transparent hidden sm:block"></div>
-
-                {timelineEvents.map((item, idx) => (
-                  <div key={item.year} className="flex gap-6 sm:gap-8 relative group">
-                    {/* Lingkaran Ikon */}
-                    <div className="shrink-0 relative z-10">
-                      <div
-                        className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-md transition-transform group-hover:scale-110 ${idx === timelineEvents.length - 1
-                            ? "bg-[#064e3b] text-white ring-4 ring-emerald-100"
-                            : "bg-[#E5F8ED] text-[#064e3b] border border-emerald-200"
-                          }`}
-                      >
-                        <span className="material-symbols-outlined text-xl">{item.icon}</span>
-                      </div>
+    return (
+        <PageShell>
+            <section className="relative w-full overflow-hidden bg-[#E5F8ED] py-16 md:py-20">
+                <div className="absolute inset-0 opacity-15">
+                    <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${PAGE_HERO_IMAGES.sejarah}')` }} />
+                </div>
+                <div className="relative z-10 w-full px-5 lg:px-12 xl:px-16">
+                    <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1.5">
+                        <BookOpenText aria-hidden="true" className="size-4 text-[#064e3b]" />
+                        <span className="text-xs font-bold uppercase tracking-wider text-[#064e3b]">Profil Desa • Jejak Sejarah</span>
                     </div>
-
-                    {/* Konten Card */}
-                    <div className="flex-1 bg-slate-50 p-6 rounded-3xl border border-slate-100 hover:border-emerald-200 hover:bg-[#E5F8ED]/30 transition-all">
-                      <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                        <span className="px-3 py-1 rounded-full bg-[#064e3b] text-white text-xs font-bold font-mono">
-                          {item.year}
-                        </span>
-                        <span className="text-xs font-bold text-[#064e3b] bg-white px-3 py-1 rounded-full border border-gray-200">
-                          {item.highlight}
-                        </span>
-                      </div>
-
-                      <h3
-                        className="text-xl font-bold text-gray-900 group-hover:text-[#064e3b] transition-colors mb-2"
-                        style={{ fontFamily: "var(--font-bricolage)" }}
-                      >
-                        {item.title}
-                      </h3>
-
-                      <p className="text-sm text-gray-700 leading-relaxed">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Sidebar Kolom Kanan */}
-            <div className="lg:col-span-4 space-y-6">
-              {/* Card Tahukah Anda */}
-              <div className="rounded-3xl overflow-hidden shadow-lg border border-gray-100 bg-white">
-                <div className="relative h-48 w-full">
-                  <img
-                    alt="Pemandangan Lereng Ungaran Mendongan"
-                    className="w-full h-full object-cover"
-                    src={IMG.hero}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-5">
-                    <span className="text-xs font-bold text-white uppercase tracking-wider bg-[#064e3b]/80 px-3 py-1 rounded-full">
-                      Fakta Sejarah
-                    </span>
-                  </div>
+                    <h1 className="text-3xl font-bold tracking-tight text-[#064e3b] sm:text-4xl lg:text-5xl" style={{ fontFamily: "var(--font-bricolage)" }}>
+                        Sejarah Desa Mendongan
+                    </h1>
+                    <p className="mt-3 max-w-2xl text-base leading-relaxed text-gray-700">
+                        Kisah pembukaan hutan di kaki Gunung Ungaran dan awal terbentuknya permukiman Mendongan.
+                    </p>
                 </div>
-                <div className="p-6">
-                  <h4
-                    className="text-lg font-bold text-[#064e3b] mb-2"
-                    style={{ fontFamily: "var(--font-bricolage)" }}
-                  >
-                    Asal Usul Rumput Mendong
-                  </h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    Nama <strong>Mendongan</strong> berakar dari kata &ldquo;mendong&rdquo; (Fimbristylis
-                    globulosa), tanaman rawa berserat lentur yang di masa lalu menjadi bahan utama anyaman
-                    tikar dan wadah hasil bumi warga lereng gunung.
-                  </p>
-                </div>
-              </div>
+            </section>
 
-              {/* Card Nilai Luhur Budaya */}
-              <div className="rounded-3xl p-6 bg-[#E5F8ED] border border-emerald-100 space-y-3">
-                <div className="flex items-center gap-2 text-[#064e3b] font-bold text-sm">
-                  <span className="material-symbols-outlined text-lg">favorite</span>
-                  <span>Nilai Luhur Desa</span>
+            <section className="w-full bg-white py-12 md:py-16">
+                <div className="mx-auto w-full max-w-5xl px-5 lg:px-12 xl:px-16">
+                    <article className="space-y-10">
+                        <div className="border-l-4 border-emerald-300 pl-5 sm:pl-7">
+                            <p className="text-lg font-semibold leading-relaxed text-[#173c2c] sm:text-xl">
+                                Dahulu Mendongan merupakan hutan di kaki Gunung Ungaran yang belum dapat dihuni. Kisah lisan tentang bagaimana hutan itu dibuka dan menjadi Desa Mendongan diceritakan turun-temurun.
+                            </p>
+                        </div>
+
+                        <section aria-labelledby="pengembaraan-title" className="grid grid-cols-[40px_1fr] gap-4 sm:grid-cols-[48px_1fr] sm:gap-5">
+                            <div className="flex size-10 items-center justify-center rounded-xl bg-[#E5F8ED] text-[#064e3b] sm:size-12"><Footprints aria-hidden="true" className="size-5 sm:size-6" /></div>
+                            <div>
+                                <p className="text-xs font-bold uppercase tracking-wider text-[#32835c]">Sekitar tahun 1830</p>
+                                <h2 id="pengembaraan-title" className="mt-1 text-xl font-bold text-[#064e3b] sm:text-2xl" style={{ fontFamily: "var(--font-bricolage)" }}>Pengembaraan pasca Perang Diponegoro</h2>
+                                <p className="mt-3 text-sm leading-7 text-gray-700">
+                                    Setelah Perang Diponegoro melawan Belanda, keadaan di Magelang dan sekitarnya menjadi tidak menentu. Situasi mencekam membuat penduduk mencari tempat perlindungan yang aman dan tidak diketahui Belanda. Sejumlah prajurit yang lolos dari kejaran Belanda meneruskan perjalanan untuk mencari daerah baru.
+                                </p>
+                                <p className="mt-3 text-sm leading-7 text-gray-700">
+                                    Walaupun Pangeran Diponegoro dan Sentot Prawiro Dirjo berhasil ditangkap Belanda, sebagian prajurit tetap lolos dan meneruskan perjuangan dengan mencari daerah yang aman.
+                                </p>
+                                <p className="mt-3 text-sm leading-7 text-gray-700">
+                                    Menurut kisah yang disampaikan, tiga orang yang merupakan murid Kyai Mojo, yaitu Kyai Gusti, Kyai Mendong, dan istri Kyai Mendong, mengembara ke arah barat laut.
+                                </p>
+                            </div>
+                        </section>
+
+                        <section aria-labelledby="bubak-alas-title" className="grid grid-cols-[40px_1fr] gap-4 border-t border-gray-100 pt-8 sm:grid-cols-[48px_1fr] sm:gap-5">
+                            <div className="flex size-10 items-center justify-center rounded-xl bg-[#E5F8ED] text-[#064e3b] sm:size-12"><Trees aria-hidden="true" className="size-5 sm:size-6" /></div>
+                            <div>
+                                <p className="text-xs font-bold uppercase tracking-wider text-[#32835c]">Pembukaan permukiman</p>
+                                <h2 id="bubak-alas-title" className="mt-1 text-xl font-bold text-[#064e3b] sm:text-2xl" style={{ fontFamily: "var(--font-bricolage)" }}>Bubak alas di Gunung Gendol</h2>
+                                <p className="mt-3 text-sm leading-7 text-gray-700">
+                                    Setelah menempuh perjalanan, mereka tiba di sebuah hutan di anak kaki gunung yang saat itu disebut Gunung Gendol. Mereka mulai membuka hutan atau “bubak alas”. Tanah yang subur dan air yang mudah didapat membuat mereka menetap di sana. Daerah inilah yang kemudian berkembang menjadi Desa Mendongan.
+                                </p>
+                                <blockquote className="mt-5 border-l-2 border-emerald-400 bg-[#F4FAF6] px-4 py-3 text-sm leading-7 text-gray-700 sm:px-5">
+                                    Menurut legenda yang diwariskan masyarakat, bangsa jin membantu mereka membuka hutan atas izin Allah SWT. Dalam waktu yang tidak begitu lama, beberapa kampung kemudian terbentuk di sekitar Mendongan.
+                                </blockquote>
+                            </div>
+                        </section>
+
+                        <section aria-labelledby="kampung-title" className="grid grid-cols-[40px_1fr] gap-4 border-t border-gray-100 pt-8 sm:grid-cols-[48px_1fr] sm:gap-5">
+                            <div className="flex size-10 items-center justify-center rounded-xl bg-[#E5F8ED] text-[#064e3b] sm:size-12"><MapPinned aria-hidden="true" className="size-5 sm:size-6" /></div>
+                            <div>
+                                <p className="text-xs font-bold uppercase tracking-wider text-[#32835c]">Permukiman awal</p>
+                                <h2 id="kampung-title" className="mt-1 text-xl font-bold text-[#064e3b] sm:text-2xl" style={{ fontFamily: "var(--font-bricolage)" }}>Kampung-kampung yang terbentuk</h2>
+                                <p className="mt-3 text-sm leading-7 text-gray-700">Kisah sejarah menyebut lima kampung yang terbentuk di sekitar Mendongan:</p>
+                                <ol className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                    {villageOrigins.map((village, index) => (
+                                        <li className="flex items-center gap-3 rounded-lg bg-slate-50 px-4 py-3 text-sm font-semibold text-gray-800" key={village}>
+                                            <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[#E5F8ED] text-xs font-bold text-[#064e3b]">{index + 1}</span>
+                                            Kampung {village}
+                                        </li>
+                                    ))}
+                                </ol>
+                            </div>
+                        </section>
+
+                        <section aria-labelledby="lanjan-title" className="grid grid-cols-[40px_1fr] gap-4 border-t border-gray-100 pt-8 sm:grid-cols-[48px_1fr] sm:gap-5">
+                            <div className="flex size-10 items-center justify-center rounded-xl bg-[#E5F8ED] text-[#064e3b] sm:size-12"><Landmark aria-hidden="true" className="size-5 sm:size-6" /></div>
+                            <div>
+                                <p className="text-xs font-bold uppercase tracking-wider text-[#32835c]">Kyai Gusti dan Lanjan</p>
+                                <h2 id="lanjan-title" className="mt-1 text-xl font-bold text-[#064e3b] sm:text-2xl" style={{ fontFamily: "var(--font-bricolage)" }}>Jejak yang tersimpan di dua desa</h2>
+                                <p className="mt-3 text-sm leading-7 text-gray-700">
+                                    Setelah Desa Mendongan terbentuk, Kyai Gusti kembali ke Desa Lanjan, tempat tinggalnya sebelumnya. Ia meninggal dan dimakamkan di Lanjan. Istri Kyai Mendong juga dimakamkan di Lanjan setelah bersilaturahmi ke tempat Kyai Gusti dan jatuh sakit.
+                                </p>
+                            </div>
+                        </section>
+                    </article>
                 </div>
-                <p className="text-xs text-gray-700 leading-relaxed">
-                  Semangat gotong royong (sambatan), musyawarah mufakat di pendopo desa, dan tradisi merti
-                  dusun menjadi modal sosial terbesar masyarakat Mendongan dalam menjaga kerukunan antar 4
-                  dusun.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </PageShell>
-  );
+            </section>
+        </PageShell>
+    );
 }

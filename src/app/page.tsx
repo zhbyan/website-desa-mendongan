@@ -105,10 +105,10 @@ function UmkmSection({ managedUmkm }: { managedUmkm: PublishedUmkm[] | null }) {
 
 // ===== DATA =====
 const heroStats = [
-  { value: "3.420+", label: "Jiwa Penduduk", icon: "groups" },
+  { value: "1.368±", label: "Jiwa Penduduk", icon: "groups" },
   { value: "3 Dusun", label: "Wilayah Rukun", icon: "holiday_village" },
   { value: "10+ UMKM", label: "Binaan & Mandiri", icon: "storefront" },
-  { value: "920 mdpl", label: "Hawa Sejuk Lereng", icon: "landscape" },
+  { value: "760 mdpl", label: "Hawa Sejuk Lereng", icon: "landscape" },
 ];
 
 const wilayah = [
@@ -277,12 +277,6 @@ export default function Page() {
                   <h3 className="text-2xl font-bold text-[#064e3b]" style={{ fontFamily: "var(--font-bricolage)" }}>{welcome.name}</h3>
                   <p className="text-sm text-[--color-on-surface-variant]">{welcome.position}</p>
                   {welcome.whatsapp && <a className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-[#064e3b] hover:underline" href={`https://wa.me/${welcome.whatsapp.replace(/\D/g, "").replace(/^0/, "62")}`} rel="noopener noreferrer" target="_blank"><span className="material-symbols-outlined text-sm">chat</span>{welcome.whatsapp}</a>}
-                </div>
-                <div className="shrink-0 text-[#064e3b]">
-                  <svg width="80" height="24" viewBox="0 0 80 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 18C15.5 18 20.5 4 33 4C45.5 4 50 20 62.5 20C71 20 75 14 79 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M25 21H75" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-                  </svg>
                 </div>
               </div>
             </div>

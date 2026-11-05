@@ -1,16 +1,44 @@
 "use client";
 
 import { useState } from "react";
+import { FileText, MessageCircle, UsersRound } from "lucide-react";
 import PageShell from "../components/PageShell";
 import { PAGE_HERO_IMAGES } from "../components/shared";
 
-type SuratType =
-  | "Surat Keterangan Usaha (SKU)"
-  | "Surat Keterangan Domisili"
-  | "Surat Pengantar SKCK"
-  | "Surat Keterangan Tidak Mampu (SKTM)"
-  | "Surat Keterangan Belum Menikah"
-  | "Surat Keterangan Kelahiran / Kematian";
+type SuratType = "Surat Keterangan Usaha (SKU)" | "Surat Keterangan Domisili" | "Surat Pengantar SKCK";
+type PopulationService = "KTP" | "Kartu Keluarga (KK)" | "Akta Kelahiran" | "Akta Kematian" | "Pindah Datang" | "Pindah Keluar" | "Kartu Identitas Anak (KIA)";
+type ServiceType = SuratType | PopulationService;
+
+const suratServices: SuratType[] = [
+  "Surat Keterangan Usaha (SKU)",
+  "Surat Keterangan Domisili",
+  "Surat Pengantar SKCK",
+];
+
+const populationServices: PopulationService[] = [
+  "KTP",
+  "Kartu Keluarga (KK)",
+  "Akta Kelahiran",
+  "Akta Kematian",
+  "Pindah Datang",
+  "Pindah Keluar",
+  "Kartu Identitas Anak (KIA)",
+];
+
+const serviceRequirements: Record<ServiceType, string[]> = {
+  "Surat Keterangan Usaha (SKU)": ["KTP asli"],
+  "Surat Keterangan Domisili": ["KTP asli"],
+  "Surat Pengantar SKCK": ["Fotokopi Kartu Keluarga (KK)", "Fotokopi KTP"],
+  KTP: ["Formulir F.1.02", "Berusia minimal 17 tahun", "Fotokopi Kartu Keluarga (KK)", "Surat kehilangan dari kepolisian (jika KTP hilang)", "KTP lama (jika rusak)"],
+  "Kartu Keluarga (KK)": ["Formulir F.1.02", "Fotokopi dokumen/bukti peristiwa kependudukan dan peristiwa penting", "Formulir F.1.05 (jika perkawinan/perceraian belum tercatat)", "Formulir F.1.06 (jika ada perubahan elemen data)", "Kartu Keluarga dan KTP lama", "Surat kehilangan dari kepolisian (jika dokumen hilang)"],
+  "Akta Kelahiran": ["Formulir F.2.01A", "Surat keterangan lahir dari dokter/rumah sakit", "Buku nikah orang tua", "Kartu Keluarga", "KTP kedua orang tua", "Nama lengkap anak dengan jelas"],
+  "Akta Kematian": ["Formulir F.2.01A", "Surat keterangan kematian dari rumah sakit/desa", "Kartu Keluarga"],
+  "Pindah Datang": ["Formulir F.1.02", "Formulir F.1.03A (selain orang tua kandung)", "Formulir F.1.03B (jika menumpang KK)", "Formulir F.1.03C (jika bukan alamat rumah sendiri)", "Kartu Keluarga", "SKPWNI", "KTP-el"],
+  "Pindah Keluar": ["Formulir F.1.02", "Formulir F.1.03 (selain orang tua kandung)", "Kartu Keluarga"],
+  "Kartu Identitas Anak (KIA)": ["Formulir F.1.02", "Fotokopi akta kelahiran", "Fotokopi Kartu Keluarga", "Pas foto 4×6 satu lembar untuk anak usia di atas 5 tahun; latar merah untuk tahun lahir ganjil dan biru untuk tahun lahir genap"],
+};
+
+const SERVICE_WHATSAPP_NUMBER = "628170790161";
 
 export default function KontakPage() {
   const [formData, setFormData] = useState({
@@ -18,12 +46,12 @@ export default function KontakPage() {
     nik: "",
     dusun: "Dusun Mendongan",
     whatsapp: "",
-    jenisSurat: "Surat Keterangan Usaha (SKU)" as SuratType,
+    jenisLayanan: suratServices[0] as ServiceType,
     keperluan: "",
   });
 
+  const [serviceCategory, setServiceCategory] = useState<"surat" | "administrasi">("surat");
   const [submitted, setSubmitted] = useState(false);
-  const [ticketId, setTicketId] = useState("");
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -32,8 +60,22 @@ export default function KontakPage() {
       alert("Mohon lengkapi Nama, NIK, dan Nomor WhatsApp.");
       return;
     }
-    const randNum = Math.floor(1000 + Math.random() * 9000);
-    setTicketId(`MDN-2026-${randNum}`);
+    const message = [
+      "Halo Admin Layanan Desa Mendongan, saya ingin mengajukan layanan:",
+      "",
+      `Nama: ${formData.nama.trim()}`,
+      `Dusun: ${formData.dusun}`,
+      `Nomor WhatsApp pemohon: ${formData.whatsapp.trim()}`,
+      `Jenis layanan: ${formData.jenisLayanan}`,
+      `Keperluan: ${formData.keperluan.trim() || "-"}`,
+      "",
+      "Persyaratan yang disiapkan:",
+      ...serviceRequirements[formData.jenisLayanan].map((requirement) => `- ${requirement}`),
+      "",
+      "NIK tidak disertakan dalam pesan ini demi privasi.",
+    ].join("\n");
+    const whatsappUrl = `https://wa.me/${SERVICE_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
     setSubmitted(true);
   };
 
@@ -43,9 +85,10 @@ export default function KontakPage() {
       nik: "",
       dusun: "Dusun Mendongan",
       whatsapp: "",
-      jenisSurat: "Surat Keterangan Usaha (SKU)",
+      jenisLayanan: suratServices[0],
       keperluan: "",
     });
+    setServiceCategory("surat");
     setSubmitted(false);
   };
 
@@ -60,7 +103,7 @@ export default function KontakPage() {
     },
     {
       q: "Apa saja syarat untuk mengurus Surat Keterangan Usaha (SKU)?",
-      a: "Syarat cukup mudah: Foto KTP pemohon, Foto KK, dan deskripsi singkat mengenai usaha yang dijalankan di wilayah Desa Mendongan.",
+      a: "Pemohon membawa KTP asli.",
     },
     {
       q: "Bagaimana cara mengakses mobil siaga desa saat kondisi darurat medis?",
@@ -119,7 +162,7 @@ export default function KontakPage() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                 </span>
-                <span>Kantor Buka: Senin – Jumat 08.00 – 15.00 WIB</span>
+                <span>Kantor Buka: Senin – Jumat</span>
               </div>
             </div>
 
@@ -227,7 +270,7 @@ export default function KontakPage() {
                   Formulir Pengajuan Surat Administrasi
                 </h3>
                 <p className="text-xs text-gray-500 mt-1">
-                  Data Anda dijamin kerahasiaannya dan hanya digunakan untuk keperluan penerbitan surat resmi desa.
+                  NIK tidak disertakan. WhatsApp akan membuka draf pesan untuk Anda tinjau dan kirim sendiri.
                 </p>
               </div>
 
@@ -238,18 +281,17 @@ export default function KontakPage() {
                   </div>
                   <div>
                     <span className="text-xs font-bold uppercase tracking-wider text-[#064e3b]">
-                      Permohonan Berhasil Dikirim
+                      Draf WhatsApp Siap
                     </span>
                     <h4
                       className="text-2xl font-bold text-gray-900 mt-1"
                       style={{ fontFamily: "var(--font-bricolage)" }}
                     >
-                      Nomor Tiket: {ticketId}
+                      Tinjau dan kirim permohonan
                     </h4>
                     <p className="text-sm text-gray-700 mt-2 max-w-md mx-auto">
-                      Terima kasih, Bapak/Ibu <strong>{formData.nama}</strong>. Permohonan{" "}
-                      <strong>{formData.jenisSurat}</strong> Anda telah masuk ke sistem kami. Petugas
-                      desa akan mengonfirmasi berkas via nomor WhatsApp ({formData.whatsapp}).
+                      Draf untuk layanan <strong>{formData.jenisLayanan}</strong> sudah dibuka di WhatsApp.
+                      Periksa pesannya, lalu tekan <strong>Kirim</strong> di WhatsApp agar permohonan diterima petugas.
                     </p>
                   </div>
                   <button
@@ -271,6 +313,34 @@ export default function KontakPage() {
                       onChange={(e) => setFormData({ ...formData, nama: e.target.value })}
                       className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#064e3b] focus:ring-2 focus:ring-[#064e3b]/20 bg-slate-50"
                     />
+                  </div>
+
+                  <div className="mb-2">
+                    <span className="mb-2 block text-xs font-bold text-gray-700">Pilih jenis layanan</span>
+                    <div className="grid grid-cols-2 gap-2 rounded-xl bg-[#E5F8ED] p-1.5">
+                      <button
+                        aria-pressed={serviceCategory === "surat"}
+                        className={`flex min-h-10 items-center justify-center gap-2 rounded-lg px-2 py-2 text-xs font-bold transition-colors ${serviceCategory === "surat" ? "bg-[#064e3b] text-white shadow-sm" : "text-[#064e3b] hover:bg-white/70"}`}
+                        onClick={() => {
+                          setServiceCategory("surat");
+                          setFormData({ ...formData, jenisLayanan: suratServices[0] });
+                        }}
+                        type="button"
+                      >
+                        <FileText aria-hidden="true" className="size-4" /> Surat
+                      </button>
+                      <button
+                        aria-pressed={serviceCategory === "administrasi"}
+                        className={`flex min-h-10 items-center justify-center gap-2 rounded-lg px-2 py-2 text-xs font-bold transition-colors ${serviceCategory === "administrasi" ? "bg-[#064e3b] text-white shadow-sm" : "text-[#064e3b] hover:bg-white/70"}`}
+                        onClick={() => {
+                          setServiceCategory("administrasi");
+                          setFormData({ ...formData, jenisLayanan: populationServices[0] });
+                        }}
+                        type="button"
+                      >
+                        <UsersRound aria-hidden="true" className="size-4" /> Administrasi Kependudukan
+                      </button>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -314,22 +384,28 @@ export default function KontakPage() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-gray-700 mb-1">Jenis Surat yang Diajukan *</label>
+                      <label className="block text-xs font-bold text-gray-700 mb-1">{serviceCategory === "surat" ? "Jenis Surat yang Diajukan *" : "Jenis Layanan Kependudukan *"}</label>
                       <select
-                        value={formData.jenisSurat}
+                        value={formData.jenisLayanan}
                         onChange={(e) =>
-                          setFormData({ ...formData, jenisSurat: e.target.value as SuratType })
+                          setFormData({ ...formData, jenisLayanan: e.target.value as ServiceType })
                         }
                         className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#064e3b] focus:ring-2 focus:ring-[#064e3b]/20 bg-slate-50"
                       >
-                        <option value="Surat Keterangan Usaha (SKU)">Surat Keterangan Usaha (SKU)</option>
-                        <option value="Surat Keterangan Domisili">Surat Keterangan Domisili</option>
-                        <option value="Surat Pengantar SKCK">Surat Pengantar SKCK</option>
-                        <option value="Surat Keterangan Tidak Mampu (SKTM)">Surat Keterangan Tidak Mampu (SKTM)</option>
-                        <option value="Surat Keterangan Belum Menikah">Surat Keterangan Belum Menikah</option>
-                        <option value="Surat Keterangan Kelahiran / Kematian">Surat Keterangan Kelahiran / Kematian</option>
+                        {(serviceCategory === "surat" ? suratServices : populationServices).map((service) => (
+                          <option key={service} value={service}>{service}</option>
+                        ))}
                       </select>
                     </div>
+                  </div>
+
+                  <div aria-live="polite" className="rounded-xl border border-emerald-100 bg-[#F4FAF6] p-4">
+                    <h4 className="text-sm font-bold text-[#064e3b]">Syarat yang perlu dibawa</h4>
+                    <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-gray-700">
+                      {serviceRequirements[formData.jenisLayanan].map((requirement) => (
+                        <li className="flex gap-2" key={requirement}><span aria-hidden="true" className="font-bold text-[#32835c]">•</span><span>{requirement}</span></li>
+                      ))}
+                    </ul>
                   </div>
 
                   <div>
@@ -349,8 +425,8 @@ export default function KontakPage() {
                     type="submit"
                     className="w-full py-3.5 rounded-2xl bg-[#064e3b] text-white text-sm font-bold hover:bg-[#08634c] transition-all shadow-md flex items-center justify-center gap-2 mt-4"
                   >
-                    <span className="material-symbols-outlined text-lg">send</span>
-                    <span>Kirim Pengajuan Surat</span>
+                    <MessageCircle aria-hidden="true" className="size-5" />
+                    <span>Lanjutkan ke WhatsApp</span>
                   </button>
                 </form>
               )}
@@ -383,7 +459,7 @@ export default function KontakPage() {
                 <div className="space-y-2 text-xs text-gray-700 border-t border-slate-200 pt-4">
                   <div className="flex items-center justify-between">
                     <span className="text-gray-500">Email Resmi:</span>
-                    <span className="font-semibold text-[#064e3b]">pemdes.mendongan@gmail.com</span>
+                    <span className="font-semibold text-[#064e3b]">desamendongankecamatansumowono@gmail.com</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-500">Telepon Kantor:</span>

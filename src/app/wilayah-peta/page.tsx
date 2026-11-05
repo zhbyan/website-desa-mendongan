@@ -53,7 +53,7 @@ export default function WilayahPetaPage() {
               </div>
               <div className="flex items-center gap-2 text-xs font-bold text-[#064e3b] bg-white px-4 py-2 rounded-full border border-emerald-200 shadow-2xs">
                 <span className="material-symbols-outlined text-sm">landscape</span>
-                <span>Ketinggian: ±740 (Lereng Gunung Ungaran)</span>
+                <span>Ketinggian: ±760 (Lereng Gunung Ungaran)</span>
               </div>
             </div>
 

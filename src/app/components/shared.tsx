@@ -8,16 +8,16 @@ export const manrope = {
 
 // ===== ASET GAMBAR (Unsplash dummy) =====
 export const IMG = {
-  logo: "/logo.png",
+  logo: "/logo%20kabupaten%20semarang.png",
   hero: "/foto%20gunung.jpg",
   profile: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80",
-  warga: "/umkm.jpg",
+  warga: "/umkm.JPG",
   sayur: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&q=80",
   bambu: "https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=800&q=80",
   kuliner: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80",
   edukasi: "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=800&q=80",
   peta: "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1200&q=80",
-  berita1: "/dokumentasi.jpg",
+  berita1: "/dokumentasi.JPG",
   berita2: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80",
   berita3: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80",
   galeri1: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80",

@@ -1,10 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { GraduationCap, Handshake, Hammer, Network, Sprout, Moon, type LucideIcon } from "lucide-react";
 import PageShell from "../../components/PageShell";
 import { PAGE_HERO_IMAGES } from "../../components/shared";
 import { getPublishedCmsContent } from "../../public-cms";
 import { EMPTY_SITE_PROFILE, mergeSiteProfile } from "@/lib/site-profile";
+
+const missionIconMap: Record<string, LucideIcon> = {
+  account_tree: Network,
+  favorite: Handshake,
+  heart_handshake: Handshake,
+  school: GraduationCap,
+  nights_stay: Moon,
+  nightlight: Moon,
+  engineering: Hammer,
+  forest: Sprout,
+  agriculture: Sprout,
+  handshake: Handshake,
+};
+
+const fallbackMissionIcons: LucideIcon[] = [Network, Handshake, GraduationCap, Moon, Hammer, Sprout];
 
 export default function VisiMisiPage() {
   const [vision, setVision] = useState(EMPTY_SITE_PROFILE.vision);
@@ -77,15 +93,16 @@ export default function VisiMisiPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {vision.missions.map((m, index) => (
-              <div
+            {vision.missions.map((m, index) => {
+              const MissionIcon = missionIconMap[m.icon.toLowerCase()] ?? fallbackMissionIcons[index % fallbackMissionIcons.length];
+              return <div
                 key={m.id}
                 className="group p-6 sm:p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-emerald-200 hover:bg-[#E5F8ED]/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <div className="w-12 h-12 rounded-2xl bg-[#E5F8ED] text-[#064e3b] flex items-center justify-center shrink-0 group-hover:bg-[#064e3b] group-hover:text-white transition-colors shadow-2xs">
-                      <span className="material-symbols-outlined text-2xl">{m.icon}</span>
+                      <MissionIcon aria-hidden="true" className="size-6" strokeWidth={1.8} />
                     </div>
                     <span
                       className="text-3xl font-black text-emerald-200 group-hover:text-[#064e3b] transition-colors"
@@ -108,8 +125,8 @@ export default function VisiMisiPage() {
 
                   <p className="text-sm text-gray-600 leading-relaxed">{m.description}</p>
                 </div>
-              </div>
-            ))}
+              </div>;
+            })}
           </div>
         </div>
       </section>

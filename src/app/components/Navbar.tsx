@@ -73,8 +73,8 @@ export default function Navbar() {
         {/* Logo & Nama Desa */}
         <Link href="/" className="flex items-center gap-3 shrink-0 group">
           <img
-            alt="Logo Desa Mendongan"
-            className={`h-9 w-auto object-contain transition-all ${isTransparent ? "brightness-0 invert" : ""}`}
+            alt="Lambang Kabupaten Semarang"
+            className="size-9 shrink-0 object-contain"
             src={IMG.logo}
           />
           <div className="flex flex-col">
